@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -57,12 +58,12 @@
 </head>
 <body>
 		<form name="form1" method="post" action="Intro">
-		  로그인</br>
+		  로그인<br>
 		        <hr/>
 		        <input type = "text" id = "id" value = "ID" name="member_id" onfocus="clearText(this)">
 		        <input type = "text" id = "password" value = "PASSWORD" name="member_password" onfocus="clearText(this)">
 		        <input type="submit" value="로그인" onclick='loginCheck()'/><br><br>
-		        회원가입 페이지</br>
+		        회원가입 페이지<br>
 		        <hr/>
 		</form>        
 
@@ -71,8 +72,8 @@
            <input type = "text" id = "id" value = "EMAIL OR PHONE NUMBER" name="member_id" onfocus="clearText(this)"><br>
            <input type = "password" id = "password" value = "PASSWORD" name="member_password" onfocus="clearText(this)"><br>
            <input type = "text" id = "birth" value = "BIRTH(90.01.02)" name="member_birth" onfocus="clearText(this)"><br>
-            GENDER : <input type="radio" name="chk_info" value="MALE">MALE
-                <input type="radio" name="chk_info" value="FEMALE">FEMALE
+            GENDER : <input type="radio" id= "1" name="member_sex" value="MALE">MALE
+                <input type="radio" id = "1" name="member_sex" value="FEMALE">FEMALE
             <input type="submit" value="가입" />
         </form>
 </body>

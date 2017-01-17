@@ -22,9 +22,8 @@ public class JoinMemberServiceImpl implements JoinMemberService{
 		return joinmemberDao.selectJoinMember(member_id);
 	}
 	
-	public String loginCheck(HashMap<String, String> hstParam){
-		String identify = joinmemberDao.loginIdentify(hstParam);
-		
+	public int loginCheck(HashMap<String, String> hstParam){
+		int identify = joinmemberDao.loginIdentify(hstParam);
 		return identify;
 	}
 	

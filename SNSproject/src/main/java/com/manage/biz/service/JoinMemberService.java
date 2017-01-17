@@ -8,5 +8,5 @@ import com.manage.biz.vo.JoinMember;
 public interface JoinMemberService {
 	int insertJoinMember(JoinMember joinmember) throws Exception;
 	JoinMember getAllMember(String member_id) throws Exception;
-	public String loginCheck(HashMap<String, String> hstParam);
+	public int loginCheck(HashMap<String, String> hstParam);
 }

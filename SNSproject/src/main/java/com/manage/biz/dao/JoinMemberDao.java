@@ -9,5 +9,5 @@ public interface JoinMemberDao {
 
 	int insertJoinMember(JoinMember insert_member) throws Exception;
 	JoinMember selectJoinMember(String member_id) throws Exception;
-	String loginIdentify(HashMap<String, String> hstParam);
+	int loginIdentify(HashMap<String, String> hstParam);
 }

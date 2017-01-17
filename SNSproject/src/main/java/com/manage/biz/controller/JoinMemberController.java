@@ -47,6 +47,9 @@ public class JoinMemberController {
 	//회원가입
 	@RequestMapping("/insert") 
 	public String JoinMemberList(JoinMember joinmember, Model model) throws Exception {
+		//System.out.println(joinmember.getMember_id());
+		//System.out.println(joinmember.getMember_birth());
+		System.out.println(joinmember.getMember_sex());
 		joinmemberService.insertJoinMember(joinmember);
 		return "sns/login"; //views->sns->login.jsp
 	}

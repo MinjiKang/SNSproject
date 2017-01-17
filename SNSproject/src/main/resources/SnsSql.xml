@@ -5,26 +5,19 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace = "JoinMemberDao">
-	
-	<!--  <insert id="insertJoinMember" parameterType="joinmember">
+
+	<insert id="insertMember" parameterType="joinmember">
 		<selectKey resultType="integer" keyProperty="member_no" order="BEFORE">
 		    SELECT MEMBER_SEQ_NO.nextVal FROM DUAL
 		</selectKey>
 		INSERT INTO JOINMEMBER VALUES (#{member_no},#{member_id},#{member_password},#{member_name},#{member_birth},#{member_sex})
-	</insert> -->
-	<insert id="insertJoinMember" parameterType="joinmember">
-		<selectKey resultType="integer" keyProperty="member_no" order="BEFORE">
-		    SELECT MEMBER_SEQ_NO.nextVal FROM DUAL
-		</selectKey>
-		INSERT INTO JOINMEMBER VALUES (#{member_no},#{member_id},#{member_password},#{member_name},#{member_birth})
 	</insert>
 	
 
 	<select id="loginIdentify" resultType="String" parameterType="String" >
-		<![CDATA[
  			select member_password
  			  from JOINMEMBER 
  			 where member_id=#{member_id}
- 		]]>
 	</select>
+	
 </mapper>
