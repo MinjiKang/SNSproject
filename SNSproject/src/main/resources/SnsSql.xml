@@ -12,12 +12,9 @@
 		</selectKey>
 		INSERT INTO JOINMEMBER VALUES (#{member_no},#{member_id},#{member_password},#{member_name},#{member_birth},#{member_sex})
 	</insert>
-	
-
-	<select id="loginIdentify" resultType="String" parameterType="String" >
- 			select member_password
- 			  from JOINMEMBER 
- 			 where member_id=#{member_id}
-	</select>
+    
+    <select id="selectLoginUser" resultType="joinmember">
+    	select member_id, member_password, member_name from JOINMEMBER where member_id=#{member_id} and member_password=#{member_password}
+    </select>
 	
 </mapper>

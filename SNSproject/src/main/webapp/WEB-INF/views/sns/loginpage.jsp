@@ -1,14 +1,42 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>Insert title here</title>
+	<title>로그인 </title>
 </head>
 <body>
-	<form name="form3" method="post" action="loginpage">
-	 �α��� ����!
-	</form>
+<c:choose>
+	<c:when test="${not empty sessionScope.userLoginInfo}">
+		<h2>로그인 성공 </h2>
+		${sessionScope.userLoginInfo.member_name}님, 안녕하세요. 로그인 되었습니다!<br>
+		<br>
+		<br>
+		<a href="logout">로그아웃</a>
+		<br><br>
+		<a href="page1">페이지1</a>&nbsp;&nbsp;<a href="page2">페이지2</a>
+	</c:when>
+	<c:otherwise>
+		<h2>로그인 </h2>
+		<form name="form1" method="post" action="loginProcess">
+			<table>
+				<tr height="40px">
+					<td>유저ID</td>
+					<td><input type="text" name="member_id"></td>
+				</tr>
+				<tr height="40px">
+					<td>패스워드</td>
+					<td><input type="password" name="member_password"></td>
+				</tr>
+			</table>
+			<table>
+				<tr>
+					<td align="center"><input type="submit" value="로그인"></td>
+					<td align="center"><input type="reset" value="리셋"></td>
+				</tr>
+			</table>
+			<a href="application">회원가입</a>
+		</form>
+	</c:otherwise>
+</c:choose>
 </body>
 </html>

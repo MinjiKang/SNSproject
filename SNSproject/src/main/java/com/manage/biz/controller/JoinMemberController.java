@@ -1,15 +1,11 @@
 package com.manage.biz.controller;
 
-import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.util.Locale;
+
 import javax.servlet.http.HttpSession;
 
-import org.apache.catalina.User;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.manage.biz.service.JoinMemberService;
 import com.manage.biz.vo.JoinMember;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Handles requests for the application home page.
@@ -37,47 +34,48 @@ public class JoinMemberController {
 	 * @throws Exception 
 	 */
 	
-	//초기화면
-	@RequestMapping("/Intro") //홈페이지 주소 http://localhost:8080/biz/Intro
+	//회원가입 페이지
+	@RequestMapping("/application") //홈페이지 주소 http://localhost:8080/biz/Intro
 	public String IntroPage(Locale locale, Model model) throws Exception {
 
-		return "sns/login"; //views->sns->login.jsp
+		return "sns/JoinMembership"; //views->sns->login.jsp
 	}
 	
-	//회원가입
+	//회원가입 - db에 저장
 	@RequestMapping("/insert") 
 	public String JoinMemberList(JoinMember joinmember, Model model) throws Exception {
 		//System.out.println(joinmember.getMember_id());
 		//System.out.println(joinmember.getMember_birth());
 		System.out.println(joinmember.getMember_sex());
 		joinmemberService.insertJoinMember(joinmember);
-		return "sns/login"; //views->sns->login.jsp
+		return "sns/loginpage"; //views->sns->loginpage.jsp
 	}
 	
-	//로그인 처리
-	/*@RequestMapping("/loginCheck")
-	public String loginCheck(HttpServletRequest request, HttpServletResponse response){
-		logger.debug("==============login check");
-		
-		String returnURL = "";
-		
-		if("ID".equals(request.getParameter("member_id"))&& "PASSWORD".equals(request.getParameter("member_password"))){
-			Map<String, String> map = new HashMap<String, String>();
-			map.put("admin_id", "admin");
-			map.put("admin_name", "administrator");
-			request.getSession().setAttribute("logininfo", map);
-			returnURL = "home";
-		}else{
-			returnURL = "login";
-		}
-		return returnURL;
-		}
 	
-	@RequestMapping("/home")
-	public String home(Locale locale, Model model){
-		logger.debug("======= home 화면 =========");
-		return "home";
-	}*/
+	@RequestMapping("/loginForm")
+    public String loginForm(){
+        return "sns/loginpage";
+    }
 	
+    //로그인 처리
+    @RequestMapping("/loginProcess")
+	public ModelAndView loginProcess(JoinMember user, HttpSession session, HttpServletRequest request) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("redirect:loginForm");
+		
+		JoinMember loginUser = joinmemberService.findByUserIdAndPassword(user.getMember_id(), user.getMember_password());
+		
+		if (loginUser != null) {
+			session.setAttribute("userLoginInfo", loginUser);
+		}
+		return mav;
+	}
+    
+    // 로그아웃
+    @RequestMapping("/logout")
+    public String logout(HttpSession session) {
+        session.setAttribute("userLoginInfo", null);
+        return "redirect:loginForm";
+    }
 }
 
