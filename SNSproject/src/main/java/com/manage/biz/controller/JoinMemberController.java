@@ -38,7 +38,7 @@ public class JoinMemberController {
 	@RequestMapping("/application") //홈페이지 주소 http://localhost:8080/biz/Intro
 	public String IntroPage(Locale locale, Model model) throws Exception {
 
-		return "sns/JoinMembership"; //views->sns->login.jsp
+		return "sns/JoinMembership"; //views->sns->JoinMembership.jsp
 	}
 	
 	//회원가입 - db에 저장
@@ -51,7 +51,7 @@ public class JoinMemberController {
 		return "sns/loginpage"; //views->sns->loginpage.jsp
 	}
 	
-	
+	//로그인 화면(아이디, 비밀번호 입력)
 	@RequestMapping("/loginForm")
     public String loginForm(){
         return "sns/loginpage";
@@ -65,7 +65,7 @@ public class JoinMemberController {
 		
 		JoinMember loginUser = joinmemberService.findByUserIdAndPassword(user.getMember_id(), user.getMember_password());
 		
-		if (loginUser != null) {
+		if (loginUser != null) { //session check
 			session.setAttribute("userLoginInfo", loginUser);
 		}
 		return mav;
@@ -75,6 +75,7 @@ public class JoinMemberController {
     @RequestMapping("/logout")
     public String logout(HttpSession session) {
         session.setAttribute("userLoginInfo", null);
+        //session.invalidate(); //session 종료(안에있는 데이터 다삭제)
         return "redirect:loginForm";
     }
 }

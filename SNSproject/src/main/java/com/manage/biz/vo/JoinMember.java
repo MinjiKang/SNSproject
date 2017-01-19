@@ -44,20 +44,5 @@ public class JoinMember {
 	public void setMember_sex(String member_sex) {
 		this.member_sex = member_sex;
 	}
-
-	public static class Member{
-		 public static String member_name="member_name";
-	        public static String member_id="member_id";
-	        public static String member_password="member_password";
-	        public static String member_birth="member_birth";
-	        public static String member_sex="member_sex";
-	        public static String member_no = "member_no";
-
-	}
-
-	public String get(String member_password2) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
 }
