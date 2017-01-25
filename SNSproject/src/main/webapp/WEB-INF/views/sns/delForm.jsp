@@ -53,8 +53,7 @@
         </TR>
         
         <TR height="30">
-            <TD colspan="2" align="middle">
-            	
+            <TD colspan="2" align="middle">      	
                 <input type="submit" value="Å»Åð"> 
                 <input type="button" value="Ãë¼Ò" onclick="alert('È¸¿øÅ»Åð¸¦ Ãë¼ÒÇÕ´Ï´Ù.'); history.back(); ">
             </TD>

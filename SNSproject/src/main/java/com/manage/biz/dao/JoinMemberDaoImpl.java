@@ -38,7 +38,6 @@ public class JoinMemberDaoImpl implements JoinMemberDao{
         return sqlSession.selectOne("JoinMemberDao.selectLoginUser", paramMap);
 	}
 	
-	
 	/*회원탈퇴*/
 	public JoinMember deleteMemeber(JoinMember member) throws Exception{
 		return sqlSession.selectOne("JoinMemberDao.deleteMember", member);
@@ -61,4 +60,9 @@ public class JoinMemberDaoImpl implements JoinMemberDao{
 		return matching_ok;
 	}
 	
+	/*아이디 중복검사*/
+	public int CheckID(JoinMember joinmember) throws Exception{
+		int m_id = sqlSession.selectOne("JoinMemberDao.selectCheckID", joinmember);
+		return m_id;
+	}	
 }

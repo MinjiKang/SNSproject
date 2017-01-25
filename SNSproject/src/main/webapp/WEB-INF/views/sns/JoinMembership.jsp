@@ -104,8 +104,7 @@
         		// 모든조건이 충족되면 true반환
         		document.form2.submit();
         	} 
-        	
-        	
+
         }
         
         function CheckValue(){
@@ -118,6 +117,25 @@
         	}
         }
 
+        function CheckID(){
+        	if(document.form2.member_id.value == null || document.form2.member_id.value =="" || document.form2.member_id.value =="이메일"){
+        		alert("공백을 채우세요");
+        		return false;
+        	}
+        	else{
+        		document.form2.action = 'CheckID';
+        		document.form2.submit();
+        	}
+        }
+        
+        window.onload = function(){
+      	   var msg = '${msg2}';
+      	   
+      	       if ( msg != '')	{   
+      		   alert('${msg2}');
+      	       document.form2.member_id.value = '${joinmember.member_id}';
+      	       }
+        }
         </script>
         
 </head>
@@ -125,11 +143,13 @@
 
 		<h1>가입하기</h1><br>    
 
-        <form name="form2" method="post" action="insert" >
+        <form name="form2" method="post">
+        <div class="placeholder_box">
            <input type = "text" id = "name" value = "이름" name="member_name" onfocus="clearText(this)"><br>
-           <input type = "text" id = "id" value = "이메일" name="member_id" onfocus="clearText(this)" onkeyup="CheckEmail()" onkeydown = "check_Overlap_Id()"><br>
+           </div>
+           <input type = "text" id = "id" value = "이메일" name="member_id" onfocus="clearText(this)" onkeyup="CheckEmail()" onkeydown = "check_Overlap_Id()">
+           <input type ="button" id = "checkid" value = "중복검사" onclick="CheckID()">
            <div id="checkId"></div> <!-- 이메일 유효성 체크 메세지 -->
-           <div id="checkOverlap"></div> <!-- 아이디 중복 검사 메세지 -->
            <input type = "password" id = "password" value = "비밀번호" name="member_password" onfocus="clearText(this)" onkeyup="CheckPassword()">
            <div id="checkPwd"></div> <!-- 비밀번호 유효성 체크 메세지 -->
            <input type = "password" id = "password_re" value = "비밀번호" onfocus="clearText(this)" onkeyup="CheckValue()">

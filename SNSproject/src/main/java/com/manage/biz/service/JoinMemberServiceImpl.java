@@ -32,19 +32,28 @@ public class JoinMemberServiceImpl implements JoinMemberService{
     	return joinmemberDao.deleteMemeber(member);
     }
     
-   //비밀번호 찾기
+    //비밀번호 찾기
     public int findPassword(JoinMember joinmember)throws Exception{
     	int m_password = joinmemberDao.findPassword(joinmember);
     	return m_password;
     }
+    
     //비밀번호 수정
     public void updatePassword(JoinMember joinmember) throws Exception{
     	joinmemberDao.updatePassword(joinmember);
     }
     
+    //아이디 패스워드 일치여부
     public int matching(JoinMember joinmember) throws Exception {
     	int matching_ok = joinmemberDao.matching(joinmember);
     	return matching_ok;
+    }
+    
+    //아이디 중복검사
+    public int CheckID(JoinMember joinmember)throws Exception{
+    	
+    	int m_id = joinmemberDao.CheckID(joinmember);
+    	return m_id;
     }
 
 }

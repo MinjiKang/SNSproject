@@ -79,8 +79,7 @@ public class JoinMemberController {
         return "redirect:loginForm";
         
     }
-    
-    
+ 
     //회원탈퇴 페이지  
     @RequestMapping("/deleteForm")
     public String deletePage() throws Exception{
@@ -112,7 +111,7 @@ public class JoinMemberController {
     @RequestMapping("/pass")
 	public String IntroPage1(Locale locale, Model model) throws Exception {
 
-		return "sns/FindPassword"; //views->sns->Findpassword.jsp
+		return "sns/FindPassword"; 
 		
 	}
 	
@@ -143,6 +142,25 @@ public class JoinMemberController {
 
 		return "sns/loginpage";
 		
+	}
+	
+	//아이디 중복검사
+	@RequestMapping("/CheckID")
+	public String CheckID(JoinMember joinmember, Model model) throws Exception {
+
+		int rtn1=joinmemberService.CheckID(joinmember);
+		
+		if(rtn1==0)
+		{
+			model.addAttribute("joinmember", joinmember);
+			model.addAttribute("msg2", "가능한 아이디입니다");
+			return "sns/JoinMembership"; 
+		}
+		else
+		{	
+			model.addAttribute("msg3", "중복입니다.");
+			return "sns/CheckID";	
+		}
 	}
 }
 
