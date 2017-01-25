@@ -103,7 +103,9 @@
         	} else {
         		// 모든조건이 충족되면 true반환
         		document.form2.submit();
-        	}
+        	} 
+        	
+        	
         }
         
         function CheckValue(){
@@ -115,24 +117,33 @@
         		document.getElementById('checkValue').innerHTML ="";
         	}
         }
+
         </script>
         
 </head>
 <body>
-		<form name="form1" method="post" action="Intro">
 
-		<h1>가입하기</h1><br>
-		
-		</form>        
+		<h1>가입하기</h1><br>    
 
         <form name="form2" method="post" action="insert" >
            <input type = "text" id = "name" value = "이름" name="member_name" onfocus="clearText(this)"><br>
-           <input type = "text" id = "id" value = "이메일" name="member_id" onfocus="clearText(this)" onkeyup="CheckEmail()"><br>
-           <div id="checkId"></div>
+           <input type = "text" id = "id" value = "이메일" name="member_id" onfocus="clearText(this)" onkeyup="CheckEmail()" onkeydown = "check_Overlap_Id()"><br>
+           <div id="checkId"></div> <!-- 이메일 유효성 체크 메세지 -->
+           <div id="checkOverlap"></div> <!-- 아이디 중복 검사 메세지 -->
            <input type = "password" id = "password" value = "비밀번호" name="member_password" onfocus="clearText(this)" onkeyup="CheckPassword()">
-           <div id="checkPwd"></div>
+           <div id="checkPwd"></div> <!-- 비밀번호 유효성 체크 메세지 -->
            <input type = "password" id = "password_re" value = "비밀번호" onfocus="clearText(this)" onkeyup="CheckValue()">
-           <div id="checkValue"></div>
+           <div id="checkValue"></div> <!-- 비밀번호 일치 여부 메세지  -->
+          
+ 		   <select  name="password_q" >
+	         <option value="">질문 </option>
+			 <option value="아버지의 성함은?">아버지의 성함은?</option>
+			 <option value="가장 좋아하는 색깔은?">가장 좋아하는 색깔은?</option>
+			 <option value="가장 좋아하는 음식은?">가장 좋아하는 음식은?</option>
+	       </select>  
+	       
+	       <input type = "text" id = "password_a" name="password_a" value = "비밀번호답변" onfocus="clearText(this)"><br>         
+          
            <select name="member_birth_y">
 	         <option value="">연도 </option>
 		         <c:forEach var="member_birth" begin="1980" end="2016" step="1">

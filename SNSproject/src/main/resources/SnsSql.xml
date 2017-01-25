@@ -14,7 +14,26 @@
 	</insert>
     
     <select id="selectLoginUser" resultType="joinmember">
-    	select member_id, member_password, member_name from JOINMEMBER where member_id=#{member_id} and member_password=#{member_password}
+    	SELECT member_id, member_password, member_name from JOINMEMBER where member_id=#{member_id} and member_password=#{member_password}
     </select>
+	
+	<select id = "deleteMember" resultType="joinmember">
+		DELETE FROM JOINMEMBER WHERE member_password=#{member_password}
+	</select>
+	
+	<select id="matching" parameterType="joinmember" resultType="int">
+		SELECT COUNT(*) FROM JOINMEMBER where member_password=#{member_password}
+	</select>
+	
+	<select id="selectFind" parameterType="joinmember" resultType="int">
+    	select count(*) from JOINMEMBER where member_id=#{member_id} and member_name=#{member_name} and password_a=#{password_a} 
+    </select>
+   
+    <update id="UpdatePassword" parameterType="joinmember">
+   		UPDATE JOINMEMBER SET member_password = #{member_password}
+   			where member_id=#{member_id} 
+   				and member_name=#{member_name}
+   					and password_a=#{password_a}
+	</update>
 	
 </mapper>
