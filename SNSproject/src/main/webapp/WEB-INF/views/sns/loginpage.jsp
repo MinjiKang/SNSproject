@@ -62,6 +62,7 @@
 				</tr>
 			</table>
 			<br><a href="application">계정 만들기</a>
+			<br><a href="pass">비밀번호찾기</a>
 		</form>
 	</c:otherwise>
 </c:choose>

@@ -102,6 +102,7 @@
         		return false; //submit 진행 차단
         	} else {
         		// 모든조건이 충족되면 true반환
+        		document.form2.action = 'insert';
         		document.form2.submit();
         	} 
 
@@ -148,7 +149,7 @@
            <input type = "text" id = "name" value = "이름" name="member_name" onfocus="clearText(this)"><br>
            </div>
            <input type = "text" id = "id" value = "이메일" name="member_id" onfocus="clearText(this)" onkeyup="CheckEmail()" onkeydown = "check_Overlap_Id()">
-           <input type ="button" id = "checkid" value = "중복검사" onclick="CheckID()">
+           <input type ="button" id = "checkid" value = "중복검사" onclick="CheckID()"> <!-- 아이디 중복검사 버튼 -->
            <div id="checkId"></div> <!-- 이메일 유효성 체크 메세지 -->
            <input type = "password" id = "password" value = "비밀번호" name="member_password" onfocus="clearText(this)" onkeyup="CheckPassword()">
            <div id="checkPwd"></div> <!-- 비밀번호 유효성 체크 메세지 -->

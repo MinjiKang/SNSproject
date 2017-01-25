@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -8,14 +7,14 @@
 </head>
 	<body>
 		<form action="main">
-		    <h2>È¸¿ø Àü¿ë ÆäÀÌÁö</h2>
-		    ${sessionScope.userLoginInfo.member_name}´ÔÀ¸·Î ·Î±×ÀÎ ÇÏ¼Ì½À´Ï´Ù.<br>
-		    ${sessionScope.userLoginInfo.member_id}´Ô È¯¿µÇÕ´Ï´Ù<br>
+		    <h2>íšŒì› ì „ìš© í˜ì´ì§€</h2>
+		    ${sessionScope.userLoginInfo.member_name}ë‹˜ìœ¼ë¡œ ë¡œê·¸ì¸ í•˜ì…¨ìŠµë‹ˆë‹¤.<br>
+		    ${sessionScope.userLoginInfo.member_id}ë‹˜ í™˜ì˜í•©ë‹ˆë‹¤<br>
 	  
-		    <input type="button" value="·Î±×¾Æ¿ô" onclick="location.href='logout.do'">  
-		    <input type="button" value="¸ğµçÈ¸¿øº¸±â" onclick="location.href='memberList.do'">
-		    <input type="button" value="È¸¿ø¼öÁ¤ÆäÀÌÁö" onclick="location.href='memberUpdateForm.do'"> 
-		    <input type="button" value="È¸¿øÅ»Åğ" onclick="location.href='deleteForm.do'">
+		    <input type="button" value="ë¡œê·¸ì•„ì›ƒ" onclick="location.href='logout.do'">  
+		    <input type="button" value="ëª¨ë“ íšŒì›ë³´ê¸°" onclick="location.href='memberList.do'">
+		    <input type="button" value="íšŒì›ìˆ˜ì •í˜ì´ì§€" onclick="location.href='memberUpdateForm.do'"> 
+		    <input type="button" value="íšŒì›íƒˆí‡´" onclick="location.href='deleteForm.do'">
 	    </form> 
 	</body>
 </html>

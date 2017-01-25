@@ -158,8 +158,8 @@ public class JoinMemberController {
 		}
 		else
 		{	
-			model.addAttribute("msg3", "중복입니다.");
-			return "sns/CheckID";	
+			model.addAttribute("msg2", "중복입니다.");
+			return "sns/JoinMembership";	
 		}
 	}
 }
