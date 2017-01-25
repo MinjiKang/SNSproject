@@ -162,5 +162,18 @@ public class JoinMemberController {
 			return "sns/JoinMembership";	
 		}
 	}
+	
+	//회원정보 수정 페이지
+	@RequestMapping("/memberUpdateForm")
+	public String editMember() throws Exception {
+		return "sns/editForm";
+	}
+	
+	//회원정보 수정
+	@RequestMapping("/UpdateInfo")
+	public String updateInfo(JoinMember joinmember, Model model) throws Exception {
+		joinmemberService.updatePassword(joinmember);
+		return "sns/main";
+	}
 }
 

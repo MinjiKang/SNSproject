@@ -11,7 +11,7 @@
 		<selectKey resultType="integer" keyProperty="member_no" order="BEFORE">
 		    SELECT MEMBER_SEQ_NO.nextVal FROM DUAL
 		</selectKey>
-		INSERT INTO JOINMEMBER VALUES (#{member_no},#{member_id},#{member_password},#{member_name},#{member_birth},#{member_sex})
+		INSERT INTO JOINMEMBER VALUES (#{member_no},#{member_id},#{member_password},#{member_name},#{member_birth},#{member_sex},#{password_q},#{password_a})
 	</insert>
 	
     <!-- 로그인 -->
@@ -46,5 +46,5 @@
 	<select id="selectCheckID" parameterType="joinmember" resultType="int">
     	select count(*) from JOINMEMBER where member_id=#{member_id}
     </select>
-	
+    
 </mapper>

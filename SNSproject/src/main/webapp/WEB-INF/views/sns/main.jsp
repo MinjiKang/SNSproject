@@ -11,10 +11,10 @@
 		    ${sessionScope.userLoginInfo.member_name}님으로 로그인 하셨습니다.<br>
 		    ${sessionScope.userLoginInfo.member_id}님 환영합니다<br>
 	  
-		    <input type="button" value="로그아웃" onclick="location.href='logout.do'">  
-		    <input type="button" value="모든회원보기" onclick="location.href='memberList.do'">
-		    <input type="button" value="회원수정페이지" onclick="location.href='memberUpdateForm.do'"> 
-		    <input type="button" value="회원탈퇴" onclick="location.href='deleteForm.do'">
+		    <input type="button" value="로그아웃" onclick="location.href='logout'">  
+		    <input type="button" value="모든회원보기" onclick="location.href='memberList'">
+		    <input type="button" value="회원수정페이지" onclick="location.href='memberUpdateForm'"> 
+		    <input type="button" value="회원탈퇴" onclick="location.href='deleteForm'">
 	    </form> 
 	</body>
 </html>
