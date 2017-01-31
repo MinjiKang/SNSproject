@@ -49,8 +49,8 @@
 </head>
 <body>
 <form name="form1" method="post" action="updatepassword" >
-아이디 <input type="text" id="id" value="${joinmember.member_id }" name="member_id" onfocus="clearText(this)"><br>
-이름   <input type="text" id="name" value="${joinmember.member_name }" name="member_name" onfocus="clearText(this)"><br>
+아이디 <input type="text" id="id" value="${joinmember.member_id}" name="member_id" onfocus="clearText(this)"><br>
+이름   <input type="text" id="name" value="${joinmember.member_name}" name="member_name" onfocus="clearText(this)"><br>
 비밀번호 질문
            <select   >
 	         <option value="">질문 </option>

@@ -1,9 +1,12 @@
 package com.manage.biz.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.manage.biz.dao.JoinMemberDao;
+import com.manage.biz.vo.Friends;
 import com.manage.biz.vo.JoinMember;
 
 
@@ -18,8 +21,9 @@ public class JoinMemberServiceImpl implements JoinMemberService{
 		return m_seq;
 	}
 	
-	public JoinMember getAllMember(String member_id) throws Exception{
-		return joinmemberDao.selectJoinMember(member_id);
+	//회원정보 수정
+	public void updateUserInfo(JoinMember joinmember) throws Exception{
+		joinmemberDao.updateUserInfo(joinmember);
 	}
 
 	//로그인 처리
@@ -54,6 +58,40 @@ public class JoinMemberServiceImpl implements JoinMemberService{
     	
     	int m_id = joinmemberDao.CheckID(joinmember);
     	return m_id;
+    }
+    
+    //이름으로 사람들 찾기
+    public List<JoinMember> findPeople(JoinMember joinmember) throws Exception{
+    	List<JoinMember> peoplelist = joinmemberDao.findPeople(joinmember);
+    	return peoplelist;
+	}
+    
+    //내 친구목록
+    public List<JoinMember> myfriend(Friends friends) throws Exception{
+    	List<JoinMember> my_friend_list = joinmemberDao.myfriend(friends);
+    	return my_friend_list;
+	}
+    
+    //친구 신천하기
+	public int addfriend(Friends friends) throws Exception{
+		int m_friend =  joinmemberDao.addfriend(friends);
+		return m_friend;
+	}
+	
+	public int addfriend2(Friends friends) throws Exception{
+		return joinmemberDao.addfriend2(friends);
+
+	}
+	
+	//친구 신청목록
+    public List<Friends> selectfriends() throws Exception{
+    	List<Friends> friendslist= joinmemberDao.selectfriends();
+    	return friendslist;
+    }
+    
+    //친구 수락
+    public void allowfriends(Friends friends) throws Exception{
+    	joinmemberDao.allowfriends(friends);
     }
 
 }

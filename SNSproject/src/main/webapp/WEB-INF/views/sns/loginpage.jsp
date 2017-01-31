@@ -31,7 +31,7 @@
     </script>
 </head>
 <body>
-<c:choose>
+<%-- <c:choose>
 	<c:when test="${not empty sessionScope.userLoginInfo}">
 		<h2>로그인 성공 </h2>
 		${sessionScope.userLoginInfo.member_name}님, 안녕하세요. 로그인 되었습니다!<br>
@@ -42,7 +42,7 @@
 		<br><br>
 		<!-- <a href="page1">페이지1</a>&nbsp;&nbsp;<a href="page2">페이지2</a> -->
 	</c:when>
-	<c:otherwise>
+	<c:otherwise> --%>
 		<h1>로그인</h1>
 		<form name="form1" method="post" action="loginProcess" onSubmit="return Login()">
 			<table>
@@ -64,7 +64,7 @@
 			<br><a href="application">계정 만들기</a>
 			<br><a href="pass">비밀번호찾기</a>
 		</form>
-	</c:otherwise>
-</c:choose>
+<%-- 	</c:otherwise>
+</c:choose> --%>
 </body>
 </html>

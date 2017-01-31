@@ -176,6 +176,13 @@
 		        <version>1.9.13</version>
 		</dependency>
 		
+		<!-- 웹 소켓 설정 -->
+		<dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-websocket</artifactId>
+          <version>4.1.6.RELEASE</version>
+        </dependency>
+		
 		<!-- Test -->
 		<dependency>
 			<groupId>junit</groupId>

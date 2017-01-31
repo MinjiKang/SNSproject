@@ -19,18 +19,23 @@
 	     });
 	     
 	 });
+	 
+	 function chk(){
+
+		document.form2.submit();
+	 }
  </script>
 </head>
 <body>
 
 <h1>회원정보 수정</h1>
 
-<form name="form2" action = "editMember" method="post">
-	<input type = "text" id = "name" value = "${sessionScope.userLoginInfo.member_name}" name="member_name" onfocus="clearText(this)" disabled="disabled"><br>
-           <input type = "text" id = "id" value = "${sessionScope.userLoginInfo.member_id}" name="member_id" onfocus="clearText(this)" onkeyup="CheckEmail()" onkeydown = "check_Overlap_Id()" disabled="disabled"><br>
+<form name="form2" action = "UpdateInfo" method="post">
+	<input type = "text" id = "member_name" value = "${sessionScope.userLoginInfo.member_name}" name="member_name" onfocus="clearText(this)" disabled="disabled"><br>
+           <input type = "text" id = "member_id" value = "${sessionScope.userLoginInfo.member_id}" name="member_id" onfocus="clearText(this)" onkeyup="CheckEmail()" onkeydown = "check_Overlap_Id()" disabled="disabled"><br>
            <div id="checkId"></div> <!-- 이메일 유효성 체크 메세지 -->
            <div id="checkOverlap"></div> <!-- 아이디 중복 검사 메세지 -->
-           <input type = "password" id = "password" placeholder = "비밀번호" name="member_password" onfocus="clearText(this)" onkeyup="CheckPassword()">
+           <input type = "password" id = "member_password" placeholder = "비밀번호" name="member_password" onfocus="clearText(this)" onkeyup="CheckPassword()">
            <div id="checkPwd"></div> <!-- 비밀번호 유효성 체크 메세지 -->
            <input type = "password" id = "password_re" placeholder = "비밀번호 재입력" onfocus="clearText(this)" onkeyup="CheckValue()">
            <div id="checkValue"></div> <!-- 비밀번호 일치 여부 메세지  -->
@@ -65,7 +70,7 @@
            <input type="hidden" name="member_birth" id="member_birth" value="">
              <br><input type="radio" id= "1" name="member_sex" value="FEMALE">여성
                  <input type="radio" id = "1" name="member_sex" value="MALE">남성<br><br>
-             <input type="button" value="수정" onClick="location.href='UpdateInfo'"/>
+             <input type="button" value="수정" onClick="chk()"/>
 </form>
 </body>
 </html>

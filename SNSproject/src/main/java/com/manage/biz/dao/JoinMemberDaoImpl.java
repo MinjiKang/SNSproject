@@ -2,13 +2,14 @@ package com.manage.biz.dao;
 
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-
+import com.manage.biz.vo.Friends;
 import com.manage.biz.vo.JoinMember;
 
 
@@ -25,8 +26,11 @@ public class JoinMemberDaoImpl implements JoinMemberDao{
 		return m_seq;
 	}
 	
-	public JoinMember selectJoinMember(String member_id) throws Exception{
-		return sqlSession.selectOne("JoinMemberDao.JoinMember", member_id);
+	/*회원정보 수정*/
+	public void updateUserInfo(JoinMember joinmember) throws Exception{
+		System.out.println(joinmember.getMember_id());
+		System.out.println(joinmember.getMember_password());
+		sqlSession.update("JoinMemberDao.UpdateUserInfo", joinmember);
 	}
 	
 	/*로그인 처리*/
@@ -65,4 +69,39 @@ public class JoinMemberDaoImpl implements JoinMemberDao{
 		int m_id = sqlSession.selectOne("JoinMemberDao.selectCheckID", joinmember);
 		return m_id;
 	}	
+	
+	/*이름으로 사람들 찾기*/
+	public List<JoinMember> findPeople(JoinMember joinmember) throws Exception{
+		System.out.println("dao list");
+		List<JoinMember> peoplelist = sqlSession.selectList("JoinMemberDao.findPeople", joinmember);
+		return peoplelist;
+	}
+	
+	/*내 친구목록*/
+	public List<JoinMember> myfriend(Friends friends) throws Exception{
+		
+		List<JoinMember> my_friend_list = sqlSession.selectList("JoinMemberDao.myfriend", friends);
+		return my_friend_list;
+	}
+	
+	/*친구 신청하기*/
+	public int addfriend(Friends friends) throws Exception{
+		int m_friend = sqlSession.insert("JoinMemberDao.addfriend", friends);
+		return m_friend ;
+	}
+	
+	public int addfriend2(Friends friends) throws Exception{
+		return sqlSession.insert("JoinMemberDao.addfriend2", friends);
+	}
+	
+	/*친구신청목록*/
+	public List<Friends> selectfriends() throws Exception{
+		List<Friends> friendslist = sqlSession.selectList("JoinMemberDao.selectfriends");
+		return friendslist;
+	}
+	
+	/*친구 수락*/
+	public void allowfriends(Friends friends) throws Exception{
+		sqlSession.update("JoinMemberDao.allowfriends", friends);
+	}
 }

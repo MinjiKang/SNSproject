@@ -1,5 +1,6 @@
 package com.manage.biz.controller;
 
+import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpSession;
@@ -12,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.manage.biz.service.JoinMemberService;
+import com.manage.biz.vo.Friends;
 import com.manage.biz.vo.JoinMember;
 
 
@@ -25,7 +27,7 @@ public class JoinMemberController {
 	JoinMemberService joinmemberService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(JoinMemberController.class);
-	
+	 
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 * @throws Exception 
@@ -171,9 +173,56 @@ public class JoinMemberController {
 	
 	//회원정보 수정
 	@RequestMapping("/UpdateInfo")
-	public String updateInfo(JoinMember joinmember, Model model) throws Exception {
-		joinmemberService.updatePassword(joinmember);
+	public String updateInfo(JoinMember joinmember, HttpSession session, Model model) throws Exception {
+		model.addAttribute("joinmember", joinmember);
+		JoinMember sessionMember = (JoinMember)session.getAttribute("userLoginInfo");
+		joinmember.setMember_id(sessionMember.getMember_id());
+		joinmemberService.updateUserInfo(joinmember);
 		return "sns/main";
+	}
+	
+	//친구 찾기
+	@RequestMapping("/findpeople")
+	public String FindPeople(JoinMember joinmember, Model model) throws Exception {
+
+		List<JoinMember> peoplelist = joinmemberService.findPeople(joinmember);
+		model.addAttribute("joinmember", peoplelist);
+		
+		return "sns/PeopleList";
+	}
+	
+	//친구 신청 및 신청한 목록
+	@RequestMapping("/addfriend")
+	public String addfriend( Model model, Friends friends) throws Exception {
+	
+		int m_friend = joinmemberService.addfriend(friends);
+		
+		List<Friends> friendslist = joinmemberService.selectfriends();
+		model.addAttribute("friends", friendslist);
+		
+		return "sns/FriendList"; 
+	}
+	
+	// 친구 수락
+	@RequestMapping("/allowfriends") 
+	public String allowfriends(Friends friends, Model model) throws Exception {
+		
+		joinmemberService.allowfriends(friends);
+		List<Friends> friendslist = joinmemberService.selectfriends();
+		joinmemberService.addfriend2(friends);
+		model.addAttribute("friends", friendslist);
+		return "sns/FriendList";
+	}
+	
+	//친구조회
+	@RequestMapping("/myfriend") 
+	public String Myfriend(Friends friends, Model model) throws Exception {
+	
+
+		List<JoinMember> my = joinmemberService.myfriend(friends);
+		model.addAttribute("myfriend", my);
+		
+		return "sns/Myfriend";
 	}
 }
 

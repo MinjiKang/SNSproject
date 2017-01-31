@@ -28,4 +28,5 @@
 	<resources mapping="/css/**" location="/css/" />
 	<resources mapping="/js/**" location="/js/" />
 	
+	
 </beans:beans>
