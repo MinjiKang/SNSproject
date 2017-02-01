@@ -2,6 +2,7 @@ package com.manage.biz.dao;
 
 import java.util.List;
 
+import com.manage.biz.vo.Board;
 import com.manage.biz.vo.Friends;
 import com.manage.biz.vo.JoinMember;
 
@@ -19,7 +20,13 @@ public interface JoinMemberDao {
     List<JoinMember> findPeople(JoinMember joinmember) throws Exception; //이름으로 사람들 찾기
     List<JoinMember> myfriend(Friends friends) throws Exception; //내 친구목록
     int addfriend(Friends friends) throws Exception; //친구 신청하기
-    int addfriend2(Friends friends) throws Exception; 
-    List<Friends> selectfriends() throws Exception; // 친구신청목록
+    int addfriend2(Friends friends) throws Exception;
+    List<Friends> selectfriends(Friends friends) throws Exception; // 친구신청목록
+    List<Friends> request(Friends friends) throws Exception; //친구 요청
     void allowfriends(Friends friends) throws Exception; //친구 수락
+    void cancelfriends(Friends friends) throws Exception; //친구 요청 수정
+    void stopfriend(Friends friends) throws Exception; //친구 끊기
+    int insertBoardContent(Board board_contents) throws Exception; //게시글 작성
+    List<Board> listBoardContents(JoinMember joinmember) throws Exception; //게시글 작성
+    Board deleteBoardContent(Board board) throws Exception; //게시물 삭제
 }

@@ -3,6 +3,7 @@ package com.manage.biz.controller;
 import java.util.List;
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -13,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.manage.biz.service.JoinMemberService;
+import com.manage.biz.vo.Board;
 import com.manage.biz.vo.Friends;
 import com.manage.biz.vo.JoinMember;
 
@@ -60,12 +62,36 @@ public class JoinMemberController {
 	
     //로그인 처리
     @RequestMapping("/loginProcess")
-	public String loginProcess(JoinMember user, HttpSession session, Model model) throws Exception {
+	public String loginProcess(JoinMember user, Board board, HttpSession session, HttpServletRequest req, Model model) throws Exception {
     	
 		JoinMember loginUser = joinmemberService.findByUserIdAndPassword(user.getMember_id(), user.getMember_password());
 
 		if (loginUser != null) { //session check
 			session.setAttribute("userLoginInfo", loginUser);
+			List<Board> listboard_contents = joinmemberService.listBoardContents(loginUser);
+			model.addAttribute("listcontents", listboard_contents);
+			
+			return "sns/main"; //로그인 시 넘어가는 화면
+		}
+		
+		return "sns/FailPage";	//로그인 실패 시 
+
+	}
+    
+    //main에서 이벤트 업데이트 화면
+    @RequestMapping("/goMain")
+	public String goMain(HttpSession session, HttpServletRequest req, Model model) throws Exception {
+    	
+    	JoinMember sessionInfo = (JoinMember)session.getAttribute("userLoginInfo");
+    	
+		JoinMember loginUser = joinmemberService.findByUserIdAndPassword(sessionInfo.getMember_id(), sessionInfo.getMember_password());
+
+		if (loginUser != null) { //session check
+			session.setAttribute("userLoginInfo", loginUser);
+			Board board = new Board();
+			List<Board> listboard_contents = joinmemberService.listBoardContents(loginUser);
+			model.addAttribute("listcontents", listboard_contents);
+			
 			return "sns/main"; //로그인 시 넘어가는 화면
 		}
 		
@@ -174,55 +200,122 @@ public class JoinMemberController {
 	//회원정보 수정
 	@RequestMapping("/UpdateInfo")
 	public String updateInfo(JoinMember joinmember, HttpSession session, Model model) throws Exception {
+		
 		model.addAttribute("joinmember", joinmember);
 		JoinMember sessionMember = (JoinMember)session.getAttribute("userLoginInfo");
 		joinmember.setMember_id(sessionMember.getMember_id());
 		joinmemberService.updateUserInfo(joinmember);
 		return "sns/main";
+		
 	}
 	
 	//친구 찾기
 	@RequestMapping("/findpeople")
-	public String FindPeople(JoinMember joinmember, Model model) throws Exception {
+	public String FindPeople(JoinMember joinmember, Model model, HttpServletRequest req) throws Exception {
 
 		List<JoinMember> peoplelist = joinmemberService.findPeople(joinmember);
 		model.addAttribute("joinmember", peoplelist);
 		
+		
+		model.addAttribute("msg", req.getParameter("msg")); //addfriend -> findpeople
+		model.addAttribute("member_name", joinmember.getMember_name());//addfriend -> findpeople
 		return "sns/PeopleList";
+
 	}
 	
 	//친구 신청 및 신청한 목록
 	@RequestMapping("/addfriend")
-	public String addfriend( Model model, Friends friends) throws Exception {
-	
+	public String addfriend( Model model, Friends friends,JoinMember joinmember, HttpServletRequest req) throws Exception {
 		int m_friend = joinmemberService.addfriend(friends);
-		
-		List<Friends> friendslist = joinmemberService.selectfriends();
-		model.addAttribute("friends", friendslist);
-		
-		return "sns/FriendList"; 
+		model.addAttribute("joinmember", joinmember);
+		String msg = "add friend finish";
+		return "redirect:findpeople?member_name="+req.getParameter("member_name")+"&msg="+msg; //redirect member_name 과 message 전달
 	}
 	
 	// 친구 수락
+	@RequestMapping("/friendsList") 
+	public String friendslist(Friends friends, Model model) throws Exception {
+		List<Friends> friendslist = joinmemberService.selectfriends(friends);
+		model.addAttribute("friends", friendslist);
+		
+		return "sns/FriendList";
+	}
+	
+	//친구 수락할 여부 현황
 	@RequestMapping("/allowfriends") 
 	public String allowfriends(Friends friends, Model model) throws Exception {
-		
+
 		joinmemberService.allowfriends(friends);
-		List<Friends> friendslist = joinmemberService.selectfriends();
-		joinmemberService.addfriend2(friends);
+		List<Friends> friendslist = joinmemberService.selectfriends(friends);
 		model.addAttribute("friends", friendslist);
 		return "sns/FriendList";
 	}
 	
+	// 친구 신청한 현황
+	@RequestMapping("/request") 
+	public String Request(Friends friends, Model model) throws Exception {
+		
+		List<Friends> re = joinmemberService.request(friends);
+		model.addAttribute("friends", re);
+		return "sns/Request";
+	}
+	
+	//친구 신청 취소하기
+	@RequestMapping("/cancelfriends") 
+	public String cancelfriends(Friends friends, Model model) throws Exception {
+
+		joinmemberService.cancelfriends(friends);
+		List<Friends> re = joinmemberService.request(friends);
+		model.addAttribute("friends", re);
+	
+		return "sns/Request";
+	}
+	
 	//친구조회
 	@RequestMapping("/myfriend") 
-	public String Myfriend(Friends friends, Model model) throws Exception {
+	public String Myfriend(Friends friends, Model model,HttpServletRequest req) throws Exception {
 	
 
 		List<JoinMember> my = joinmemberService.myfriend(friends);
 		model.addAttribute("myfriend", my);
 		
+		model.addAttribute("msg1", req.getParameter("msg1"));
+		model.addAttribute("user1", friends.getUser1());
+		
 		return "sns/Myfriend";
+	}	
+	
+	//친구끊기
+	@RequestMapping("/stopfriend") 
+	public String Stopfriend(Friends friends, Model model,HttpServletRequest req) throws Exception {
+	
+		joinmemberService.stopfriend(friends);
+		String msg1 = "friend remove finish";
+	
+		return "redirect:myfriend?user1="+req.getParameter("user1")+"&msg1="+msg1;
+	}	
+	
+	//게시물 작성
+	@RequestMapping("/writeBoard")
+	public String board(JoinMember joinmember, Board board_contents, HttpSession session, Model model) throws Exception {
+		
+		model.addAttribute("joinmember", joinmember);
+		JoinMember sessionMember = (JoinMember)session.getAttribute("userLoginInfo");
+		board_contents.setBoard_writer(sessionMember.getMember_id());
+		joinmemberService.insertBoardContent(board_contents);
+		
+		return "redirect:goMain";
+		
 	}
+
+	//게시글 삭제
+	@RequestMapping("/deleteBoardContent")
+    public String deleteBoardContent(Board board, Model model, HttpSession session) throws Exception{
+		
+		joinmemberService.removeBoardContent(board);
+		
+		return "redirect:goMain";
+		
+    }
 }
 
