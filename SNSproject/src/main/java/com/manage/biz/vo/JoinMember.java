@@ -7,8 +7,9 @@ public class JoinMember {
 	String member_name;
 	String member_birth;
 	String member_sex;
-	String password_q;//ºñ¹Ð¹øÈ£ Áú¹®
-	String password_a;//ºñ¹Ð¹øÈ£ ´ä
+	String password_q;//ï¿½ï¿½Ð¹ï¿½È£ ï¿½ï¿½ï¿½ï¿½
+	String password_a;//ï¿½ï¿½Ð¹ï¿½È£ ï¿½ï¿½
+	int friend_status;
 	
 	public int getMember_no() {
 		return member_no;
@@ -58,5 +59,10 @@ public class JoinMember {
 	public void setPassword_a(String password_a) {
 		this.password_a = password_a;
 	}
-	
+	public int getFriend_status() {
+		return friend_status;
+	}
+	public void setFriend_status(int friend_status) {
+		this.friend_status = friend_status;
+	}
 }

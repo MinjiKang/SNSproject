@@ -9,24 +9,24 @@ import com.manage.biz.vo.JoinMember;
 
 public interface JoinMemberDao {
 
-	int insertJoinMember(JoinMember insert_member) throws Exception; //È¸¿ø°¡ÀÔ 
-	void updateUserInfo(JoinMember joinmember) throws Exception; //È¸¿øÁ¤º¸ ¼öÁ¤
-    JoinMember findByUserIdAndPassword(String userId, String password) throws Exception; //·Î±×ÀÎ
-    JoinMember deleteMemeber(JoinMember member) throws Exception; //È¸¿øÅ»Åð
-    int findPassword(JoinMember joinmember) throws Exception; //ºñ¹Ð¹øÈ£ Ã£±â
-    void updatePassword(JoinMember joinmember) throws Exception; //ºñ¹Ð¹øÈ£ ¼öÁ¤
-    int matching(JoinMember joinmember) throws Exception; //¾ÆÀÌµð ÆÐ½º¿öµå ÀÏÄ¡ ¿©ºÎ 
-    int CheckID(JoinMember joinmember) throws Exception; //¾ÆÀÌµð Áßº¹ °Ë»ç 
-    List<JoinMember> findPeople(JoinMember joinmember) throws Exception; //ÀÌ¸§À¸·Î »ç¶÷µé Ã£±â
-    List<JoinMember> myfriend(Friends friends) throws Exception; //³» Ä£±¸¸ñ·Ï
-    int addfriend(Friends friends) throws Exception; //Ä£±¸ ½ÅÃ»ÇÏ±â
-    int addfriend2(Friends friends) throws Exception;
-    List<Friends> selectfriends(Friends friends) throws Exception; // Ä£±¸½ÅÃ»¸ñ·Ï
-    List<Friends> request(Friends friends) throws Exception; //Ä£±¸ ¿äÃ»
-    void allowfriends(Friends friends) throws Exception; //Ä£±¸ ¼ö¶ô
-    void cancelfriends(Friends friends) throws Exception; //Ä£±¸ ¿äÃ» ¼öÁ¤
-    void stopfriend(Friends friends) throws Exception; //Ä£±¸ ²÷±â
-    int insertBoardContent(Board board_contents) throws Exception; //°Ô½Ã±Û ÀÛ¼º
-    List<Board> listBoardContents(JoinMember joinmember) throws Exception; //°Ô½Ã±Û ÀÛ¼º
-    Board deleteBoardContent(Board board) throws Exception; //°Ô½Ã¹° »èÁ¦
+	int insertJoinMember(JoinMember insert_member) throws Exception; //È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
+	void updateUserInfo(JoinMember joinmember) throws Exception; //È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    JoinMember findByUserIdAndPassword(String userId, String password) throws Exception; //ï¿½Î±ï¿½ï¿½ï¿½
+    JoinMember deleteMemeber(JoinMember member) throws Exception; //È¸ï¿½ï¿½Å»ï¿½ï¿½
+    int findPassword(JoinMember joinmember) throws Exception; //ï¿½ï¿½Ð¹ï¿½È£ Ã£ï¿½ï¿½
+    void updatePassword(JoinMember joinmember) throws Exception; //ï¿½ï¿½Ð¹ï¿½È£ ï¿½ï¿½ï¿½ï¿½
+    int matching(JoinMember joinmember) throws Exception; //ï¿½ï¿½ï¿½Ìµï¿½ ï¿½Ð½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ 
+    int CheckID(JoinMember joinmember) throws Exception; //ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ßºï¿½ ï¿½Ë»ï¿½ 
+    List<JoinMember> findPeople(JoinMember joinmember) throws Exception; //ï¿½Ì¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½
+    List<JoinMember> myfriend(Friends friends) throws Exception; //ï¿½ï¿½ Ä£ï¿½ï¿½ï¿½ï¿½ï¿½
+    void addfriend(Friends friends) throws Exception; 
+    void addfriend2(Friends friends) throws Exception;
+    List<Friends> selectfriends(Friends friends) throws Exception; // Ä£ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½
+    List<Friends> request(Friends friends) throws Exception; //Ä£ï¿½ï¿½ ï¿½ï¿½Ã»
+    void allowfriends(Friends friends) throws Exception; //Ä£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    void cancelfriends(Friends friends) throws Exception; //Ä£ï¿½ï¿½ ï¿½ï¿½Ã» ï¿½ï¿½ï¿½ï¿½
+    void stopfriend(Friends friends) throws Exception; //Ä£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    int insertBoardContent(Board board_contents) throws Exception; //ï¿½Ô½Ã±ï¿½ ï¿½Û¼ï¿½
+    List<Board> listBoardContents(JoinMember joinmember) throws Exception; //ï¿½Ô½Ã±ï¿½ ï¿½Û¼ï¿½
+    Board deleteBoardContent(Board board) throws Exception; //ï¿½Ô½Ã¹ï¿½ ï¿½ï¿½ï¿½ï¿½
 }

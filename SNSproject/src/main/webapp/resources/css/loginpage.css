@@ -1,0 +1,47 @@
+@CHARSET "UTF-8";
+/*** The Essential Code ***/
+html, body {
+    margin: 0;
+    padding: 0;
+    background-color: #E6E6FA;
+}
+
+#wrap {
+    margin: 0 auto;
+    padding: 0;
+}
+
+#header {
+	width: auto;
+	height: 90px;
+	background-color: #800080;
+}
+
+#id_form {
+    float: left;
+    width: 800px;
+    margin-left: 800px;
+    margin-top: -50px;
+    color: white;
+}
+
+a:link {
+	color: white;
+    text-decoration: none;
+    font-size: 12px;
+    }
+    
+a:visited { 
+	color: white; 
+	text-decoration: none;
+}
+
+a:hover { 
+	color: white; 
+	text-decoration: underline;
+}
+
+#application_form {
+	float: right;
+	margin-right: 200px;
+}

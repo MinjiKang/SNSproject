@@ -14,6 +14,8 @@ function allow(all){
 	document.form1.user1.value= all;
 	document.form1.submit();
 }
+
+
 </script>
 <body>
 <h1>친구 신청 목록</h1>

@@ -6,7 +6,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link href="resources/css/screen.css" rel="stylesheet" type="text/css">
 <title>Main Page </title>
+<script type = "text/javascript" src = "resources/js/jquery-3.1.1.min.js"></script>
 <script>
 	function btnClick(){
 		document.form2.action = 'findpeople';
@@ -39,72 +41,117 @@
 		document.selectBoardContents.action = 'deleteBoardContent';
 		document.selectBoardContents.submit();
 	}
+
+	function resize(obj) {
+		  obj.style.height = "1px";
+		  obj.style.height = (12+obj.scrollHeight)+"px";
+    }
 	
 </script>
 </head>
 	<body>
-		<form name='form1' action="main">
-		<input type="hidden" value="${sessionScope.userLoginInfo.member_no}" name="user1">
-		<input type="hidden" value="${sessionScope.userLoginInfo.member_no}" name="user2">
-		    <h2>회원 전용 페이지</h2>
-		    ${sessionScope.userLoginInfo.member_name}님으로 로그인 하셨습니다.<br>
+	
+	<div id="wrap">
+
+	    <div id="header">
+	    	<div id="image">
+	    	<input type="image" src="resources/img/home.png" >
+	    	</div>
+	    	<div id ="find">
+	    	<!-- 친구검색 -->
+			<form name='form2' action="findpeople">
+				<input type="hidden" value="${sessionScope.userLoginInfo.member_no}" name="member_no">
+			   <input type="text" value="찾고자하는 이름" name="member_name" onfocus="clearText(this)">
+			   <input type="button" value="찾기" onclick="btnClick()" >
+		    </form>	
+		    </div>
+	    </div>
+
+	    <div id="container">
+	        <div id="content">
+	        <!-- 게시글 작성 -->
+			    <div id = "center_user_content">
+				    <form name = 'boardForm'>
+						<textarea class="write" name="board_contents" onkeydown="resize(this)" onkeyup="resize(this)" placeholder="무슨 일이 일어나고 있나요?"></textarea>
+						<div id = "write_button">
+						<input type="button" value="작성" onclick="confirm()">
+						</div>
+				    </form>
+				</div>
+				    
+				    <form name='selectBoardContents'>
+			    	<input type="hidden" name="board_no">			
+				
+						<c:forEach var="Board" items="${listcontents}">
+							<div id="content_center">
+								<div id="userid">
+									♣ ${Board.board_writer}
+								</div>
+								<div id="menu_button">
+								
+								<c:set var="loginId" value="${sessionScope.userLoginInfo.member_id}"/>
+								<c:choose>
+									<c:when test="${loginId eq Board.board_writer}">
+										<ul class="one"> 
+										  <li><a href="#">menu</a>
+										    <ul>
+										       <li><a onclick="RemoveBoardContent(${Board.board_no})">글 삭제</a></li>
+										       <li><a href="#">글 수정</a></li>
+										       <li><a onclick="javascript:window.open('http://share.naver.com/web/shareView.nhn?url='
+												+encodeURIComponent(document.URL)+'&title='+encodeURIComponent(document.title),
+												 'naversharedialog', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=500,width=500');return false;" 
+												target="_blank" alt="Share on Naver">공유하기</a></li>
+										    </ul>
+										  </li>
+										</ul>
+									</c:when>
+									 <c:otherwise>
+										 <ul class="one"> 
+											  <li><a href="#">menu</a>
+											    <ul>
+											       <li><a onclick="javascript:window.open('http://share.naver.com/web/shareView.nhn?url='
+												+encodeURIComponent(document.URL)+'&title='+encodeURIComponent(document.title),
+												 'naversharedialog', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=500,width=500');return false;" 
+												target="_blank" alt="Share on Naver">공유하기</a></li>
+											       <li><a href="#">친구 신청 </a></li>
+											    </ul>
+											  </li>
+											</ul>
+									 </c:otherwise>
+								</c:choose>
+								</div>
+								<div id = "autosize_div">
+									<textarea class="autosize" readonly="readonly">${Board.board_contents}</textarea>
+								</div>
+								<br><br><br><br><br><br>${Board.diff_time}
+							</div>
+						</c:forEach>
+			   		 </form>
+	        </div>
+	    </div>
+	    
+	    <div id="sidebar">
+	    <form name='form1'>
+		    <input type="hidden" value="${sessionScope.userLoginInfo.member_no}" name="user1">
+			<input type="hidden" value="${sessionScope.userLoginInfo.member_no}" name="user2">
+			<h2>회원 전용 페이지</h2>
+			${sessionScope.userLoginInfo.member_name}님으로 로그인 하셨습니다.<br>
 		    ${sessionScope.userLoginInfo.member_id}님 환영합니다<br>
-	  
-		    <input type="button" value="로그아웃" onclick="location.href='logout'"> <!-- controller @RequestMapping -->
-		    <input type="button" value="친구조회" onclick="btnClick2()">
- 	        <input type="button" value="친구신청현황" onclick="btnClick3()"> 
-		    <input type="button" value="친구수락요청" onclick="btnClick4()">
-		    <input type="button" value="회원수정페이지" onclick="location.href='memberUpdateForm'"> 
-		    <input type="button" value="회원탈퇴" onclick="location.href='deleteForm'">
-	    </form><br>
-	    
-	    <!-- 게시글 작성 -->
-	    <form name = 'boardForm'>
-			<textarea rows="5" cols="80" name="board_contents"></textarea>
-			<input type="button" value="작성" onclick="confirm()" >
-	    </form>
-	    
-	    <form name='selectBoardContents'>
-	    <input type="hidden" name="board_no">			
+		    <input type="button" value="로그아웃" onclick="location.href='logout'"><br> <!-- controller @RequestMapping -->
+		    <input type="button" value="친구조회" onclick="btnClick2()"><br>
+ 	        <input type="button" value="친구신청현황" onclick="btnClick3()"><br>
+		    <input type="button" value="친구수락요청" onclick="btnClick4()"><br>
+		    <input type="button" value="회원수정페이지" onclick="location.href='memberUpdateForm'"><br> 
+		    <input type="button" value="회원탈퇴" onclick="location.href='deleteForm'"><br>
+		</form>
+		</div>
 		
-	    <table border="1">
-			<c:forEach var="Board" items="${listcontents}">
-			<fmt:parseDate var="dateString" value="${Board.board_date}" pattern="yyyyMMddHHmmss"/> <!-- 날짜 형식 파싱 -->
-			<tr>
-				<td>작성자</td>
-				<td><input type=text value="${Board.board_writer}" size=10 maxlength=8></td>
-			</tr>
-			<tr>
-     			<td>작성일</td>
-     			<td><input type=text value="<fmt:formatDate value="${dateString}" pattern="yyyy/MM/dd"/>" size=30></td>
-    		</tr>
-    		<tr>
-     			<td>작성시간</td>
-     			<td><input type=text value="${Board.diff_time}" size=30></td>
-    		</tr>
-			<tr>
-     			<td>내 용</td>
-     			<td><textarea name="content" rows ="5" cols="80">${Board.board_contents}</textarea></td>
-    		</tr>
-    		
-				<!-- 로그인한 사용자와 글을 쓴 사용자가 같을때만 삭제버튼이 보여진다.
-				    eq 는 ==와 동일한 의미
-				    c:set 을 써서 el도 변수로 만들 수 있다. -->
-				<c:set var="loginId" value="${sessionScope.userLoginInfo.member_id}"/>
-				<c:if test="${loginId eq Board.board_writer}">
-					<td align ="center"><input type="submit" value="글 삭제" onclick="RemoveBoardContent(${Board.board_no})"></td>
-				</c:if>
-			<!-- </tr> -->
-			</c:forEach>
-			
-		</table>
-		
-	    </form>
+	    <div id="extra"> extra</div>
 	    
-	    <!-- 친구검색 -->
-		<form name='form2' action="findpeople">
-		   <input type="text" value="찾고자하는 이름" name="member_name" onfocus="clearText(this)">
-		   <input type="button" value="찾기" onclick="btnClick()" >
-	    </form>  
+	    
+	   <!--<div id="footer"></div> -->
+    
+	</div>
+		
 	</body>
 </html>

@@ -16,112 +16,110 @@ public class JoinMemberServiceImpl implements JoinMemberService{
 	@Autowired
 	private JoinMemberDao joinmemberDao;
 	
-	//È¸¿ø°¡ÀÔ
+	//È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	public int insertJoinMember(JoinMember joinmember) throws Exception{
 		int m_seq =  joinmemberDao.insertJoinMember(joinmember);
 		return m_seq;
 	}
 	
-	//È¸¿øÁ¤º¸ ¼öÁ¤
+	//È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public void updateUserInfo(JoinMember joinmember) throws Exception{
 		joinmemberDao.updateUserInfo(joinmember);
 	}
 
-	//·Î±×ÀÎ Ã³¸®
+	//ï¿½Î±ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
     public JoinMember findByUserIdAndPassword(String userId, String password) throws Exception{
 		return joinmemberDao.findByUserIdAndPassword(userId, password);
 	}
     
-    //È¸¿øÅ»Åð
+    //È¸ï¿½ï¿½Å»ï¿½ï¿½
     public JoinMember removeMember(JoinMember member) throws Exception{
     	return joinmemberDao.deleteMemeber(member);
     }
     
-    //ºñ¹Ð¹øÈ£ Ã£±â
+    //ï¿½ï¿½Ð¹ï¿½È£ Ã£ï¿½ï¿½
     public int findPassword(JoinMember joinmember)throws Exception{
     	int m_password = joinmemberDao.findPassword(joinmember);
     	return m_password;
     }
     
-    //ºñ¹Ð¹øÈ£ ¼öÁ¤
+    //ï¿½ï¿½Ð¹ï¿½È£ ï¿½ï¿½ï¿½ï¿½
     public void updatePassword(JoinMember joinmember) throws Exception{
     	joinmemberDao.updatePassword(joinmember);
     }
     
-    //¾ÆÀÌµð ÆÐ½º¿öµå ÀÏÄ¡¿©ºÎ
+    //ï¿½ï¿½ï¿½Ìµï¿½ ï¿½Ð½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ï¿½ï¿½
     public int matching(JoinMember joinmember) throws Exception {
     	int matching_ok = joinmemberDao.matching(joinmember);
     	return matching_ok;
     }
     
-    //¾ÆÀÌµð Áßº¹°Ë»ç
+    //ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ßºï¿½ï¿½Ë»ï¿½
     public int CheckID(JoinMember joinmember)throws Exception{
     	
     	int m_id = joinmemberDao.CheckID(joinmember);
     	return m_id;
     }
     
-    //ÀÌ¸§À¸·Î »ç¶÷µé Ã£±â
+    //ï¿½Ì¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½
     public List<JoinMember> findPeople(JoinMember joinmember) throws Exception{
     	List<JoinMember> peoplelist = joinmemberDao.findPeople(joinmember);
     	return peoplelist;
 	}
     
-    //³» Ä£±¸¸ñ·Ï
+    //ï¿½ï¿½ Ä£ï¿½ï¿½ï¿½ï¿½ï¿½
     public List<JoinMember> myfriend(Friends friends) throws Exception{
     	List<JoinMember> my = joinmemberDao.myfriend(friends);
     	return my;
 	}
     
-    //Ä£±¸ ½ÅÃµÇÏ±â
-	public int addfriend(Friends friends) throws Exception{
-		int m_friend =  joinmemberDao.addfriend(friends);
-		return m_friend;
+    //Ä£ï¿½ï¿½ ï¿½ï¿½Ãµï¿½Ï±ï¿½
+	public void addfriend(Friends friends) throws Exception{
+		joinmemberDao.addfriend(friends);
+		joinmemberDao.addfriend2(friends);
 	}
 	
-	//Ä£±¸ ½ÅÃ»¸ñ·Ï
+	//Ä£ï¿½ï¿½ ï¿½ï¿½Ã»ï¿½ï¿½ï¿½
 	public List<Friends> selectfriends(Friends friends) throws Exception{
 		List<Friends> friendslist= joinmemberDao.selectfriends(friends);
     	return friendslist;
-
     }
 	
-	//Ä£±¸ ¿äÃ»
+	//Ä£ï¿½ï¿½ ï¿½ï¿½Ã»
 	public List<Friends> request(Friends friends) throws Exception{
 		
 	    List<Friends> re= joinmemberDao.request(friends);
 	    return re;
     }
     
-    //Ä£±¸ ¼ö¶ô
+    //Ä£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public void allowfriends(Friends friends) throws Exception{
     	joinmemberDao.allowfriends(friends);
-    	joinmemberDao.addfriend2(friends);
     }
     
-    //Ä£±¸ ¿äÃ» Ãë¼Ò
+    //Ä£ï¿½ï¿½ ï¿½ï¿½Ã» ï¿½ï¿½ï¿½
     public void cancelfriends(Friends friends) throws Exception{
     	joinmemberDao.cancelfriends(friends);
     }
     
-    //Ä£±¸ ²÷±â
+    //Ä£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public void stopfriend(Friends friends) throws Exception{
     	joinmemberDao.stopfriend(friends);
     }
     
-    //°Ô½Ã±Û ÀÛ¼º
+    //ï¿½Ô½Ã±ï¿½ ï¿½Û¼ï¿½
     public int insertBoardContent(Board board_contents) throws Exception{
     	int b_seq =  joinmemberDao.insertBoardContent(board_contents);
 		return b_seq;
     }
 
-    //°Ô½Ã±Û Á¶È¸
+    //ï¿½Ô½Ã±ï¿½ ï¿½ï¿½È¸
     public List<Board> listBoardContents(JoinMember joinmember) throws Exception{
     	List<Board> board_contents_list = joinmemberDao.listBoardContents(joinmember);
     	return board_contents_list;
     }
     
-    //°Ô½Ã¹° »èÁ¦
+    //ï¿½Ô½Ã¹ï¿½ ï¿½ï¿½ï¿½ï¿½
     public Board removeBoardContent(Board board_num) throws Exception{
     	return joinmemberDao.deleteBoardContent(board_num);
     }

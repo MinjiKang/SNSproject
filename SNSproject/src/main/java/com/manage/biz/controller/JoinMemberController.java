@@ -35,7 +35,7 @@ public class JoinMemberController {
 	 * @throws Exception 
 	 */
 	
-	//È¸¿ø°¡ÀÔ ÆäÀÌÁö
+	//íšŒì›ê°€ì… í˜ì´ì§€
 	@RequestMapping("/application") 
 	public String IntroPage(Locale locale, Model model) throws Exception {
 
@@ -43,7 +43,7 @@ public class JoinMemberController {
 		
 	}
 	
-	//È¸¿ø°¡ÀÔ - db¿¡ ÀúÀå
+	//íšŒì›ê°€ì… - dbì— ì €ì¥
 	@RequestMapping("/insert") 
 	public String JoinMemberList(JoinMember joinmember, Model model) throws Exception {
 		
@@ -52,15 +52,15 @@ public class JoinMemberController {
 		
 	}
 	
-	//·Î±×ÀÎ ÆäÀÌÁö(¾ÆÀÌµğ, ºñ¹Ğ¹øÈ£ ÀÔ·Â)
-	@RequestMapping("/loginForm") //È¨ÆäÀÌÁö ÁÖ¼Ò http://localhost:8080/biz/loginForm
+	//ë¡œê·¸ì¸ í˜ì´ì§€(ì•„ì´ë””, ë¹„ë°€ë²ˆí˜¸ ì…ë ¥)
+	@RequestMapping("/loginForm") //í™ˆí˜ì´ì§€ ì£¼ì†Œ http://localhost:8080/biz/loginForm
     public String loginForm(Model model){
 		
         return "sns/loginpage";
         
     }
 	
-    //·Î±×ÀÎ Ã³¸®
+    //ë¡œê·¸ì¸ ì²˜ë¦¬
     @RequestMapping("/loginProcess")
 	public String loginProcess(JoinMember user, Board board, HttpSession session, HttpServletRequest req, Model model) throws Exception {
     	
@@ -71,14 +71,15 @@ public class JoinMemberController {
 			List<Board> listboard_contents = joinmemberService.listBoardContents(loginUser);
 			model.addAttribute("listcontents", listboard_contents);
 			
-			return "sns/main"; //·Î±×ÀÎ ½Ã ³Ñ¾î°¡´Â È­¸é
+			return "sns/main"; //ë¡œê·¸ì¸ ì‹œ ë„˜ì–´ê°€ëŠ” í™”ë©´
 		}
 		
-		return "sns/FailPage";	//·Î±×ÀÎ ½ÇÆĞ ½Ã 
+		return "sns/FailPage";	//ë¡œê·¸ì¸ ì‹¤íŒ¨ ì‹œ 
 
 	}
     
-    //main¿¡¼­ ÀÌº¥Æ® ¾÷µ¥ÀÌÆ® È­¸é
+    
+    //mainì—ì„œ ì´ë²¤íŠ¸ ì—…ë°ì´íŠ¸ í™”ë©´
     @RequestMapping("/goMain")
 	public String goMain(HttpSession session, HttpServletRequest req, Model model) throws Exception {
     	
@@ -92,23 +93,23 @@ public class JoinMemberController {
 			List<Board> listboard_contents = joinmemberService.listBoardContents(loginUser);
 			model.addAttribute("listcontents", listboard_contents);
 			
-			return "sns/main"; //·Î±×ÀÎ ½Ã ³Ñ¾î°¡´Â È­¸é
+			return "sns/main"; //ë¡œê·¸ì¸ ì‹œ ë„˜ì–´ê°€ëŠ” í™”ë©´
 		}
 		
-		return "sns/FailPage";	//·Î±×ÀÎ ½ÇÆĞ ½Ã 
+		return "sns/FailPage";	//ë¡œê·¸ì¸ ì‹¤íŒ¨ ì‹œ 
 
 	}
     
-    // ·Î±×¾Æ¿ô
+    // ë¡œê·¸ì•„ì›ƒ
     @RequestMapping("/logout")
     public String logout(HttpSession session) {
         /*session.setAttribute("userLoginInfo", null);*/
-        session.invalidate(); //session Á¾·á(¾È¿¡ÀÖ´Â µ¥ÀÌÅÍ ´Ù»èÁ¦)
+        session.invalidate(); //session ì¢…ë£Œ(ì•ˆì—ìˆëŠ” ë°ì´í„° ë‹¤ì‚­ì œ)
         return "redirect:loginForm";
         
     }
  
-    //È¸¿øÅ»Åğ ÆäÀÌÁö  
+    //íšŒì›íƒˆí‡´ í˜ì´ì§€  
     @RequestMapping("/deleteForm")
     public String deletePage() throws Exception{
 
@@ -116,7 +117,7 @@ public class JoinMemberController {
     	
     }
    
-    //È¸¿øÅ»Åğ
+    //íšŒì›íƒˆí‡´
     @RequestMapping("/delete")
     public String execute(JoinMember user, HttpSession session, Model model) throws Exception{
     	
@@ -129,13 +130,13 @@ public class JoinMemberController {
 	    	return "redirect:loginForm";
     	}
     	else{
-    		model.addAttribute("msg1", "ºñ¹Ğ¹øÈ£¸¦ È®ÀÎÇÏ¼¼¿ä.");
+    		model.addAttribute("msg1", "ë¹„ë°€ë²ˆí˜¸ë¥¼ í™•ì¸í•˜ì„¸ìš”.");
 			return "sns/delForm";	
     	}
     	
     }
 
-    //ÆĞ½º¿öµå Ã£±â ÆäÀÌÁö
+    //íŒ¨ìŠ¤ì›Œë“œ ì°¾ê¸° í˜ì´ì§€
     @RequestMapping("/pass")
 	public String IntroPage1(Locale locale, Model model) throws Exception {
 
@@ -143,7 +144,7 @@ public class JoinMemberController {
 		
 	}
 	
-    //ºñ¹Ğ¹øÈ£ Ã£±â
+    //ë¹„ë°€ë²ˆí˜¸ ì°¾ê¸°
 	@RequestMapping("/findpassword")
 	public String FindPassword(JoinMember joinmember, Model model) throws Exception {
 
@@ -156,13 +157,13 @@ public class JoinMemberController {
 		}
 		else
 		{	
-			model.addAttribute("msg1", "Æ²·È½À´Ï´Ù.");
+			model.addAttribute("msg1", "í‹€ë ¸ìŠµë‹ˆë‹¤.");
 			return "sns/FindPassword";	
 		}
 		
 	}
 	
-	//ºñ¹Ğ¹øÈ£ ¼öÁ¤
+	//ë¹„ë°€ë²ˆí˜¸ ìˆ˜ì •
 	@RequestMapping("/updatepassword") 
 	public String UpdatePassword(JoinMember joinmember, Model model) throws Exception {
 		
@@ -172,7 +173,7 @@ public class JoinMemberController {
 		
 	}
 	
-	//¾ÆÀÌµğ Áßº¹°Ë»ç
+	//ì•„ì´ë”” ì¤‘ë³µê²€ì‚¬
 	@RequestMapping("/CheckID")
 	public String CheckID(JoinMember joinmember, Model model) throws Exception {
 
@@ -181,23 +182,23 @@ public class JoinMemberController {
 		if(rtn1==0)
 		{
 			model.addAttribute("joinmember", joinmember);
-			model.addAttribute("msg2", "°¡´ÉÇÑ ¾ÆÀÌµğÀÔ´Ï´Ù");
+			model.addAttribute("msg2", "ê°€ëŠ¥í•œ ì•„ì´ë””ì…ë‹ˆë‹¤");
 			return "sns/JoinMembership"; 
 		}
 		else
 		{	
-			model.addAttribute("msg2", "Áßº¹ÀÔ´Ï´Ù.");
+			model.addAttribute("msg2", "ì¤‘ë³µì…ë‹ˆë‹¤.");
 			return "sns/JoinMembership";	
 		}
 	}
 	
-	//È¸¿øÁ¤º¸ ¼öÁ¤ ÆäÀÌÁö
+	//íšŒì›ì •ë³´ ìˆ˜ì • í˜ì´ì§€
 	@RequestMapping("/memberUpdateForm")
 	public String editMember() throws Exception {
 		return "sns/editForm";
 	}
 	
-	//È¸¿øÁ¤º¸ ¼öÁ¤
+	//íšŒì›ì •ë³´ ìˆ˜ì •
 	@RequestMapping("/UpdateInfo")
 	public String updateInfo(JoinMember joinmember, HttpSession session, Model model) throws Exception {
 		
@@ -209,30 +210,29 @@ public class JoinMemberController {
 		
 	}
 	
-	//Ä£±¸ Ã£±â
-	@RequestMapping("/findpeople")
+	//ì¹œêµ¬ ì°¾ê¸°
+	@RequestMapping("/findpeople")//ç§»ì’“ë„ ï§¡ì–˜ë¦°
 	public String FindPeople(JoinMember joinmember, Model model, HttpServletRequest req) throws Exception {
 
-		List<JoinMember> peoplelist = joinmemberService.findPeople(joinmember);
+		List<JoinMember> peoplelist = joinmemberService.findPeople(joinmember);// ì¹œêµ¬ ëª©ë¡ ì°¾ê¸° -- ë‚˜ ì œì™¸ (status 2=ì‹ ì²­ì¤‘,3=ìˆ˜ë½ëŒ€ê¸° ,9 ì‹ ì²­ê°€ëŠ¥)
 		model.addAttribute("joinmember", peoplelist);
 		
-		
-		model.addAttribute("msg", req.getParameter("msg")); //addfriend -> findpeople
 		model.addAttribute("member_name", joinmember.getMember_name());//addfriend -> findpeople
+		model.addAttribute("member_no", joinmember.getMember_no());
+		model.addAttribute("msg", req.getParameter("msg")); //addfriend -> findpeople
 		return "sns/PeopleList";
 
 	}
 	
-	//Ä£±¸ ½ÅÃ» ¹× ½ÅÃ»ÇÑ ¸ñ·Ï
+	//ì¹œêµ¬ ì‹ ì²­ ë° ì‹ ì²­í•œ ëª©ë¡
 	@RequestMapping("/addfriend")
 	public String addfriend( Model model, Friends friends,JoinMember joinmember, HttpServletRequest req) throws Exception {
-		int m_friend = joinmemberService.addfriend(friends);
+		joinmemberService.addfriend(friends);
 		model.addAttribute("joinmember", joinmember);
 		String msg = "add friend finish";
-		return "redirect:findpeople?member_name="+req.getParameter("member_name")+"&msg="+msg; //redirect member_name °ú message Àü´Ş
+		return "redirect:findpeople?member_name="+req.getParameter("member_name")+"&member_no="+req.getParameter("member_no")+"&msg="+msg; //redirect member_name ï¿½â‘¨ì˜™ message å ìŒìˆå ìˆë¼
 	}
-	
-	// Ä£±¸ ¼ö¶ô
+	// ì¹œêµ¬ ìˆ˜ë½
 	@RequestMapping("/friendsList") 
 	public String friendslist(Friends friends, Model model) throws Exception {
 		List<Friends> friendslist = joinmemberService.selectfriends(friends);
@@ -241,7 +241,7 @@ public class JoinMemberController {
 		return "sns/FriendList";
 	}
 	
-	//Ä£±¸ ¼ö¶ôÇÒ ¿©ºÎ ÇöÈ²
+	//ì¹œêµ¬ ìˆ˜ë½í•  ì—¬ë¶€ í˜„í™©
 	@RequestMapping("/allowfriends") 
 	public String allowfriends(Friends friends, Model model) throws Exception {
 
@@ -251,7 +251,7 @@ public class JoinMemberController {
 		return "sns/FriendList";
 	}
 	
-	// Ä£±¸ ½ÅÃ»ÇÑ ÇöÈ²
+	// ì¹œêµ¬ ì‹ ì²­í•œ í˜„í™©
 	@RequestMapping("/request") 
 	public String Request(Friends friends, Model model) throws Exception {
 		
@@ -260,7 +260,7 @@ public class JoinMemberController {
 		return "sns/Request";
 	}
 	
-	//Ä£±¸ ½ÅÃ» Ãë¼ÒÇÏ±â
+	//ì¹œêµ¬ ì‹ ì²­ ì·¨ì†Œí•˜ê¸°
 	@RequestMapping("/cancelfriends") 
 	public String cancelfriends(Friends friends, Model model) throws Exception {
 
@@ -271,7 +271,7 @@ public class JoinMemberController {
 		return "sns/Request";
 	}
 	
-	//Ä£±¸Á¶È¸
+	//ì¹œêµ¬ì¡°íšŒ
 	@RequestMapping("/myfriend") 
 	public String Myfriend(Friends friends, Model model,HttpServletRequest req) throws Exception {
 	
@@ -285,7 +285,7 @@ public class JoinMemberController {
 		return "sns/Myfriend";
 	}	
 	
-	//Ä£±¸²÷±â
+	//ì¹œêµ¬ëŠê¸°
 	@RequestMapping("/stopfriend") 
 	public String Stopfriend(Friends friends, Model model,HttpServletRequest req) throws Exception {
 	
@@ -295,7 +295,7 @@ public class JoinMemberController {
 		return "redirect:myfriend?user1="+req.getParameter("user1")+"&msg1="+msg1;
 	}	
 	
-	//°Ô½Ã¹° ÀÛ¼º
+	//ê²Œì‹œë¬¼ ì‘ì„±
 	@RequestMapping("/writeBoard")
 	public String board(JoinMember joinmember, Board board_contents, HttpSession session, Model model) throws Exception {
 		
@@ -308,7 +308,7 @@ public class JoinMemberController {
 		
 	}
 
-	//°Ô½Ã±Û »èÁ¦
+	//ê²Œì‹œê¸€ ì‚­ì œ
 	@RequestMapping("/deleteBoardContent")
     public String deleteBoardContent(Board board, Model model, HttpSession session) throws Exception{
 		

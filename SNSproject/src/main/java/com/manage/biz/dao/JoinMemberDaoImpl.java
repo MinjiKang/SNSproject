@@ -20,21 +20,21 @@ public class JoinMemberDaoImpl implements JoinMemberDao{
 	@Autowired
 	SqlSessionTemplate sqlSession;
 
-	/*È¸¿ø°¡ÀÔ */
+	/*È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
 	public int insertJoinMember(JoinMember insert_member) throws Exception{
 		sqlSession.insert("JoinMemberDao.insertMember", insert_member);
 		int m_seq = insert_member.getMember_no();
 		return m_seq;
 	}
 	
-	/*È¸¿øÁ¤º¸ ¼öÁ¤*/
+	/*È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½*/
 	public void updateUserInfo(JoinMember joinmember) throws Exception{
 		System.out.println(joinmember.getMember_id());
 		System.out.println(joinmember.getMember_password());
 		sqlSession.update("JoinMemberDao.UpdateUserInfo", joinmember);
 	}
 	
-	/*·Î±×ÀÎ Ã³¸®*/
+	/*ï¿½Î±ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½*/
 	public JoinMember findByUserIdAndPassword(String userId, String password) throws Exception{
         Map<String, String> paramMap = new HashMap<String, String>();
         paramMap.put("member_id", userId);
@@ -43,59 +43,58 @@ public class JoinMemberDaoImpl implements JoinMemberDao{
         return sqlSession.selectOne("JoinMemberDao.selectLoginUser", paramMap);
 	}
 	
-	/*È¸¿øÅ»Åð*/
+	/*È¸ï¿½ï¿½Å»ï¿½ï¿½*/
 	public JoinMember deleteMemeber(JoinMember member) throws Exception{
 		return sqlSession.selectOne("JoinMemberDao.deleteMember", member);
 	}
 	
-	/*ºñ¹Ð¹øÈ£ Ã£±â*/
+	/*ï¿½ï¿½Ð¹ï¿½È£ Ã£ï¿½ï¿½*/
 	public int findPassword(JoinMember joinmember) throws Exception{
 		int m_password = sqlSession.selectOne("JoinMemberDao.selectFind", joinmember);
 		return m_password;
 	}
 	
-	/*ºñ¹Ð¹øÈ£ ¼öÁ¤*/
+	/*ï¿½ï¿½Ð¹ï¿½È£ ï¿½ï¿½ï¿½ï¿½*/
 	public void updatePassword(JoinMember joinmember) throws Exception{
 		sqlSession.update("JoinMemberDao.UpdatePassword", joinmember);
 	}
 
-	/*¾ÆÀÌµð ºñ¹Ð¹øÈ£ ÀÏÄ¡ ¿©ºÎ*/
+	/*ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ï¿½Ð¹ï¿½È£ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½*/
 	public int matching(JoinMember joinmember) throws Exception{
 		int matching_ok = sqlSession.selectOne("JoinMemberDao.matching", joinmember);
 		return matching_ok;
 	}
 	
-	/*¾ÆÀÌµð Áßº¹°Ë»ç*/
+	/*ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ßºï¿½ï¿½Ë»ï¿½*/
 	public int CheckID(JoinMember joinmember) throws Exception{
 		int m_id = sqlSession.selectOne("JoinMemberDao.selectCheckID", joinmember);
 		return m_id;
 	}	
 	
-	/*ÀÌ¸§À¸·Î »ç¶÷µé Ã£±â*/
+	/*ï¿½Ì¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½*/
 	public List<JoinMember> findPeople(JoinMember joinmember) throws Exception{
-		System.out.println("dao list");
+		
 		List<JoinMember> peoplelist = sqlSession.selectList("JoinMemberDao.findPeople", joinmember);
 		return peoplelist;
 	}
 	
-	/*³» Ä£±¸¸ñ·Ï*/
+	/*ï¿½ï¿½ Ä£ï¿½ï¿½ï¿½ï¿½ï¿½*/
 	public List<JoinMember> myfriend(Friends friends) throws Exception{
 		
 		List<JoinMember> my = sqlSession.selectList("JoinMemberDao.myfriend", friends);
 		return my;
 	}
 	
-	/*Ä£±¸ ½ÅÃ»ÇÏ±â*/
-	public int addfriend(Friends friends) throws Exception{
-		int m_friend = sqlSession.insert("JoinMemberDao.addfriend", friends);
-		return m_friend ;
+	/*Ä£ï¿½ï¿½ ï¿½ï¿½Ã»ï¿½Ï±ï¿½*/
+	public void addfriend(Friends friends) throws Exception{
+		sqlSession.insert("JoinMemberDao.addfriend", friends);
 	}
 	
-	public int addfriend2(Friends friends) throws Exception{
-		return sqlSession.insert("JoinMemberDao.addfriend2", friends);
+	public void addfriend2(Friends friends) throws Exception{
+		sqlSession.insert("JoinMemberDao.addfriend2", friends);
 	}
 	
-	/*Ä£±¸½ÅÃ»¸ñ·Ï*/
+	/*Ä£ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½*/
 	public List<Friends> selectfriends(Friends friends) throws Exception{
 		List<Friends> friendslist = sqlSession.selectList("JoinMemberDao.selectfriends",friends);
 		return friendslist;
@@ -106,35 +105,35 @@ public class JoinMemberDaoImpl implements JoinMemberDao{
 		return re;
 	}
 	
-	/*Ä£±¸ ¼ö¶ô*/
+	/*Ä£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½*/
 	public void allowfriends(Friends friends) throws Exception{
 		sqlSession.update("JoinMemberDao.allowfriends", friends);
 	}
 	
-    /*Ä£±¸½ÅÃ» Ãë¼Ò*/
+    /*Ä£ï¿½ï¿½ï¿½ï¿½Ã» ï¿½ï¿½ï¿½*/
 	public void cancelfriends(Friends friends) throws Exception{
 		sqlSession.delete("JoinMemberDao.cancelfriends", friends);
 	}
 	
-	/*Ä£±¸ ²÷±â*/
+	/*Ä£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½*/
 	public void stopfriend(Friends friends) throws Exception{
 		sqlSession.delete("JoinMemberDao.stopfriend", friends);
 	}
 	
-	/*°Ô½ÃÆÇ ±Û ÀÛ¼º*/
+	/*ï¿½Ô½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Û¼ï¿½*/
 	public int insertBoardContent(Board board_contents) throws Exception{
 		sqlSession.insert("JoinMemberDao.insertBoardContent", board_contents);
 		int b_seq = board_contents.getBoard_no();
 		return b_seq;
 	} 
 	
-	/*°Ô½Ã±Û Á¶È¸*/
+	/*ï¿½Ô½Ã±ï¿½ ï¿½ï¿½È¸*/
 	public List<Board> listBoardContents(JoinMember joinmember) throws Exception{
 		List<Board> board_contents_list = sqlSession.selectList("JoinMemberDao.selectBoardContent", joinmember);
 		return board_contents_list;
 	}
 	
-	/*°Ô½Ã¹° »èÁ¦*/
+	/*ï¿½Ô½Ã¹ï¿½ ï¿½ï¿½ï¿½ï¿½*/
 	public Board deleteBoardContent(Board board) throws Exception{
 		return sqlSession.selectOne("JoinMemberDao.deleteBoardContent", board);
 	}
