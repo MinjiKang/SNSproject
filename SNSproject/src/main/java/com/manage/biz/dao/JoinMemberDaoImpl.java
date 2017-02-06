@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import com.manage.biz.vo.Board;
 import com.manage.biz.vo.Friends;
 import com.manage.biz.vo.JoinMember;
+import com.manage.biz.vo.LikeButton;
 
 
 @Repository
@@ -20,21 +21,21 @@ public class JoinMemberDaoImpl implements JoinMemberDao{
 	@Autowired
 	SqlSessionTemplate sqlSession;
 
-	/*ȸ������ */
+	//회원가입
 	public int insertJoinMember(JoinMember insert_member) throws Exception{
 		sqlSession.insert("JoinMemberDao.insertMember", insert_member);
 		int m_seq = insert_member.getMember_no();
 		return m_seq;
 	}
 	
-	/*ȸ������ ����*/
+	//회원정보 수정
 	public void updateUserInfo(JoinMember joinmember) throws Exception{
 		System.out.println(joinmember.getMember_id());
 		System.out.println(joinmember.getMember_password());
 		sqlSession.update("JoinMemberDao.UpdateUserInfo", joinmember);
 	}
 	
-	/*�α��� ó��*/
+	//로그인 처리
 	public JoinMember findByUserIdAndPassword(String userId, String password) throws Exception{
         Map<String, String> paramMap = new HashMap<String, String>();
         paramMap.put("member_id", userId);
@@ -43,49 +44,45 @@ public class JoinMemberDaoImpl implements JoinMemberDao{
         return sqlSession.selectOne("JoinMemberDao.selectLoginUser", paramMap);
 	}
 	
-	/*ȸ��Ż��*/
+	//회원 탈퇴
 	public JoinMember deleteMemeber(JoinMember member) throws Exception{
 		return sqlSession.selectOne("JoinMemberDao.deleteMember", member);
 	}
 	
-	/*��й�ȣ ã��*/
+	//비밀번호 찾기
 	public int findPassword(JoinMember joinmember) throws Exception{
 		int m_password = sqlSession.selectOne("JoinMemberDao.selectFind", joinmember);
 		return m_password;
 	}
 	
-	/*��й�ȣ ����*/
+	//비밀번호 수정
 	public void updatePassword(JoinMember joinmember) throws Exception{
 		sqlSession.update("JoinMemberDao.UpdatePassword", joinmember);
 	}
 
-	/*���̵� ��й�ȣ ��ġ ����*/
+	//아이디, 패스워드 일치 여부
 	public int matching(JoinMember joinmember) throws Exception{
 		int matching_ok = sqlSession.selectOne("JoinMemberDao.matching", joinmember);
 		return matching_ok;
 	}
 	
-	/*���̵� �ߺ��˻�*/
+	 //아이디 중복검사
 	public int CheckID(JoinMember joinmember) throws Exception{
 		int m_id = sqlSession.selectOne("JoinMemberDao.selectCheckID", joinmember);
 		return m_id;
 	}	
 	
-	/*�̸����� ����� ã��*/
 	public List<JoinMember> findPeople(JoinMember joinmember) throws Exception{
-		
 		List<JoinMember> peoplelist = sqlSession.selectList("JoinMemberDao.findPeople", joinmember);
 		return peoplelist;
 	}
 	
-	/*�� ģ�����*/
 	public List<JoinMember> myfriend(Friends friends) throws Exception{
 		
 		List<JoinMember> my = sqlSession.selectList("JoinMemberDao.myfriend", friends);
 		return my;
 	}
 	
-	/*ģ�� ��û�ϱ�*/
 	public void addfriend(Friends friends) throws Exception{
 		sqlSession.insert("JoinMemberDao.addfriend", friends);
 	}
@@ -94,7 +91,6 @@ public class JoinMemberDaoImpl implements JoinMemberDao{
 		sqlSession.insert("JoinMemberDao.addfriend2", friends);
 	}
 	
-	/*ģ����û���*/
 	public List<Friends> selectfriends(Friends friends) throws Exception{
 		List<Friends> friendslist = sqlSession.selectList("JoinMemberDao.selectfriends",friends);
 		return friendslist;
@@ -105,36 +101,40 @@ public class JoinMemberDaoImpl implements JoinMemberDao{
 		return re;
 	}
 	
-	/*ģ�� ����*/
 	public void allowfriends(Friends friends) throws Exception{
 		sqlSession.update("JoinMemberDao.allowfriends", friends);
 	}
 	
-    /*ģ����û ���*/
 	public void cancelfriends(Friends friends) throws Exception{
 		sqlSession.delete("JoinMemberDao.cancelfriends", friends);
 	}
 	
-	/*ģ�� ����*/
 	public void stopfriend(Friends friends) throws Exception{
 		sqlSession.delete("JoinMemberDao.stopfriend", friends);
 	}
 	
-	/*�Խ��� �� �ۼ�*/
+	//게시글 작성
 	public int insertBoardContent(Board board_contents) throws Exception{
 		sqlSession.insert("JoinMemberDao.insertBoardContent", board_contents);
 		int b_seq = board_contents.getBoard_no();
 		return b_seq;
 	} 
 	
-	/*�Խñ� ��ȸ*/
+	//게시물 조회
 	public List<Board> listBoardContents(JoinMember joinmember) throws Exception{
 		List<Board> board_contents_list = sqlSession.selectList("JoinMemberDao.selectBoardContent", joinmember);
 		return board_contents_list;
 	}
 	
-	/*�Խù� ����*/
+	//게시물 삭제
 	public Board deleteBoardContent(Board board) throws Exception{
 		return sqlSession.selectOne("JoinMemberDao.deleteBoardContent", board);
+	}
+	
+	//좋아요 버튼 클릭시
+	public int insertLike(LikeButton likebutton) throws Exception{
+		sqlSession.insert("JoinMemberDao.insertLike", likebutton);
+		int l_seq = likebutton.getLike_no();
+		return l_seq;
 	}
 }

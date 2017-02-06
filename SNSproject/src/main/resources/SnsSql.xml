@@ -53,7 +53,7 @@
 	</update>
     
      <!--   이름으로 사람들 찾기 -->
-     <select id="findPeople" parameterType="joinmember" resultType="joinmember">
+     <select id="findPeople" parameterType="joinmember" resultType="HashMap">
     	select member_no,member_name,member_birth,9 AS friend_status
 		from JOINMEMBER
 		where member_name like #{member_name}||'%' and member_no!=#{member_no}
@@ -73,17 +73,19 @@
 	</insert>
 	
 	<!-- 친구신청목록 -->
-	<select id="selectfriends" resultType="friends" parameterType="friends">
-		select user1,user2,FRIEND_TYPE,FRIEND_STATUS from friends
-	where user2=#{user2}
-	and friend_status=3
+	<select id="selectfriends" resultType="HashMap"  parameterType="friends">
+	select a.user1,a.user2,a.friend_type,a.friend_status,b.member_no,b.member_name from friends a,joinmember b
+	where a.user1=#{user1}
+	and a.friend_status=3
+	and a.user2=b.member_no
 	</select>
-	
+
 	<!-- 친구신청목록2 -->
-	<select id="request" resultType="friends">
-		select user1,user2,FRIEND_TYPE,FRIEND_STATUS from friends
-		where user1=#{user1}
-		and friend_type=0
+	<select id="request" resultType="HashMap" parameterType="friends">
+	select a.user1,a.user2,a.friend_status,a.friend_type,b.member_no,b.member_name from friends a,JOINMEMBER b
+	where user1=#{user1}
+	and friend_status=2
+	AND user2=member_no
 	</select>
 	
 	<!-- 친구 수락 -->
@@ -103,12 +105,12 @@
 	</delete>
 	
 	<!-- 친구조회 -->
-	<select id="myfriend" parameterType="friends" resultType="joinmember">
- 		select member_no,member_name,member_birth,member_sex,member_id
-		from joinmember ,friends
-		where member_no=user1
-		and member_no!=#{user1} 
-		and friend_type=1
+	<select id="myfriend" parameterType="friends" resultType="HashMap">
+ 		select a.user2,a.friend_status,a.friend_type,b.member_no,b.member_name
+		from friends a,joinmember b
+		where a.user1=#{user1}
+		and a.friend_type=1
+		and a.user2=b.member_no
     </select>
     
 	<!-- 친구 끊기 -->
@@ -169,4 +171,11 @@
 		DELETE FROM BOARD WHERE board_no=#{board_no}
 	</select>
 	
+	<!-- 좋아요 버튼 -->
+	<insert id="insertLike" parameterType="likebutton">
+		<selectKey resultType="integer" keyProperty="like_no" order="BEFORE">
+		    SELECT LIKEBUTTON_SEQ_NO.nextVal FROM DUAL
+		</selectKey>
+		INSERT INTO LIKEBUTTON VALUES (#{like_no},#{board_no},#{member_no},to_char(sysdate, 'YYYYMMDDhh24miss'),#{like_count},1)
+	</insert>
 </mapper>

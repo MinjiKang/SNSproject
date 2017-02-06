@@ -1,5 +1,4 @@
-
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+  <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -9,11 +8,9 @@
 
 <script>
 function AddFriend(toFriend){
-
 	alert(toFriend);
 	document.form1.user2.value= toFriend;
 	document.form1.submit();
-
 }
 window.onload = function(){
 	   var msg = '${msg}';
@@ -44,21 +41,21 @@ window.onload = function(){
 </tr>
 <c:forEach var="A" items="${joinmember}">
 <tr>
-	<td align ="center">${A.member_no}</td>
-	<td align ="center">${A.member_name}</td>
-	<%-- <td align ="center">${A.member_birth}</td> --%>
-	<td align ="center">${A.friend_status}</td>
-	<c:if test="${A.friend_status == 0}">
+	<td align ="center">${A.MEMBER_NO}</td>
+	<td align ="center">${A.MEMBER_NAME}</td>
+	<td align ="center">${A.MEMBER_BIRTH}</td>
+	<td align ="center">${A.FRIEND_STATUS}</td>
+	<c:if test="${A.FRIEND_STATUS == 0}">
 	<td align ="center"><input type="button" value="친구" disabled='disabled'></td>
 	</c:if>
-	<c:if test="${A.friend_status eq 2}">
+	<c:if test="${A.FRIEND_STATUS eq 2}">
 	<td align ="center"><input type="button" value="신청중" disabled='disabled'></td>
 	</c:if>
-	<c:if test="${A.friend_status eq 3}">
+	<c:if test="${A.FRIEND_STATUS eq 3}">
 	<td align ="center"><input type="button" value="수락대기" disabled='disabled'></td>
 	</c:if>
-	<c:if test="${A.friend_status eq 9}">
-	<td align ="center"><input type="button" value="신청" onclick="AddFriend(${A.member_no})"></td>
+	<c:if test="${A.FRIEND_STATUS eq 9}">
+	<td align ="center"><input type="button" value="신청" onclick="AddFriend(${A.MEMBER_NO})"></td>
 	</c:if>
 	</tr>
 </c:forEach>

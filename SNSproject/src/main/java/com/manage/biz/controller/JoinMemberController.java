@@ -17,6 +17,7 @@ import com.manage.biz.service.JoinMemberService;
 import com.manage.biz.vo.Board;
 import com.manage.biz.vo.Friends;
 import com.manage.biz.vo.JoinMember;
+import com.manage.biz.vo.LikeButton;
 
 
 /**
@@ -211,15 +212,15 @@ public class JoinMemberController {
 	}
 	
 	//친구 찾기
-	@RequestMapping("/findpeople")//移쒓뎄 李얘린
+	@RequestMapping("/findpeople")
 	public String FindPeople(JoinMember joinmember, Model model, HttpServletRequest req) throws Exception {
 
 		List<JoinMember> peoplelist = joinmemberService.findPeople(joinmember);// 친구 목록 찾기 -- 나 제외 (status 2=신청중,3=수락대기 ,9 신청가능)
 		model.addAttribute("joinmember", peoplelist);
 		
-		model.addAttribute("member_name", joinmember.getMember_name());//addfriend -> findpeople
+		model.addAttribute("member_name", joinmember.getMember_name());
 		model.addAttribute("member_no", joinmember.getMember_no());
-		model.addAttribute("msg", req.getParameter("msg")); //addfriend -> findpeople
+		model.addAttribute("msg", req.getParameter("msg")); 
 		return "sns/PeopleList";
 
 	}
@@ -230,8 +231,9 @@ public class JoinMemberController {
 		joinmemberService.addfriend(friends);
 		model.addAttribute("joinmember", joinmember);
 		String msg = "add friend finish";
-		return "redirect:findpeople?member_name="+req.getParameter("member_name")+"&member_no="+req.getParameter("member_no")+"&msg="+msg; //redirect member_name �⑨옙 message 占쎌읈占쎈뼎
+		return "redirect:findpeople?member_name="+req.getParameter("member_name")+"&member_no="+req.getParameter("member_no")+"&msg="+msg; 
 	}
+	
 	// 친구 수락
 	@RequestMapping("/friendsList") 
 	public String friendslist(Friends friends, Model model) throws Exception {
@@ -241,20 +243,17 @@ public class JoinMemberController {
 		return "sns/FriendList";
 	}
 	
-	//친구 수락할 여부 현황
+	// 친구 수락할 리스트
 	@RequestMapping("/allowfriends") 
 	public String allowfriends(Friends friends, Model model) throws Exception {
-
 		joinmemberService.allowfriends(friends);
 		List<Friends> friendslist = joinmemberService.selectfriends(friends);
 		model.addAttribute("friends", friendslist);
 		return "sns/FriendList";
 	}
-	
-	// 친구 신청한 현황
+	// 移쒓뎄 �떊泥��븳 �쁽�솴
 	@RequestMapping("/request") 
 	public String Request(Friends friends, Model model) throws Exception {
-		
 		List<Friends> re = joinmemberService.request(friends);
 		model.addAttribute("friends", re);
 		return "sns/Request";
@@ -271,7 +270,7 @@ public class JoinMemberController {
 		return "sns/Request";
 	}
 	
-	//친구조회
+	//내 친구 조회
 	@RequestMapping("/myfriend") 
 	public String Myfriend(Friends friends, Model model,HttpServletRequest req) throws Exception {
 	
@@ -285,7 +284,7 @@ public class JoinMemberController {
 		return "sns/Myfriend";
 	}	
 	
-	//친구끊기
+	//친구 끊기
 	@RequestMapping("/stopfriend") 
 	public String Stopfriend(Friends friends, Model model,HttpServletRequest req) throws Exception {
 	
@@ -317,5 +316,19 @@ public class JoinMemberController {
 		return "redirect:goMain";
 		
     }
+	
+	//좋아요 클릭시 insert
+	@RequestMapping("/clickLikeButton")
+	public String ClickLikeButton(JoinMember joinmember, Board board, LikeButton likebutton, HttpSession session, Model model) throws Exception {
+		
+		model.addAttribute("joinmember", joinmember);
+		JoinMember sessionMember = (JoinMember)session.getAttribute("userLoginInfo");
+		likebutton.setMember_no(sessionMember.getMember_no());
+		int board_no = board.getBoard_no();
+		likebutton.setBoard_no(board_no);
+		joinmemberService.insertLike(likebutton);
+		
+		return "redirect:goMain";
+	}
+	
 }
-

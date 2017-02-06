@@ -16,8 +16,8 @@
 	}
 	
 	function btnClick2(){
-		document.form2.action = 'myfriend';
-		document.form2.submit();
+		document.form1.action = 'myfriend';
+		document.form1.submit();
 	}
 	
 	function btnClick3(){
@@ -47,6 +47,13 @@
 		  obj.style.height = (12+obj.scrollHeight)+"px";
     }
 	
+	function clickLikeButton(num){
+		alert("!!!!!!!!!!!");
+		document.selectBoardContents.board_no.value= num;
+		document.selectBoardContents.action = 'clickLikeButton';
+		document.selectBoardContents.submit();
+	}
+	
 </script>
 </head>
 	<body>
@@ -60,6 +67,7 @@
 	    	<div id ="find">
 	    	<!-- 친구검색 -->
 			<form name='form2' action="findpeople">
+		    	
 				<input type="hidden" value="${sessionScope.userLoginInfo.member_no}" name="member_no">
 			   <input type="text" value="찾고자하는 이름" name="member_name" onfocus="clearText(this)">
 			   <input type="button" value="찾기" onclick="btnClick()" >
@@ -124,6 +132,7 @@
 									<textarea class="autosize" readonly="readonly">${Board.board_contents}</textarea>
 								</div>
 								<br><br><br><br><br><br>${Board.diff_time}
+								<input type="button" value="좋아요" onclick="clickLikeButton(${Board.board_no})"><br>
 							</div>
 						</c:forEach>
 			   		 </form>
@@ -133,7 +142,6 @@
 	    <div id="sidebar">
 	    <form name='form1'>
 		    <input type="hidden" value="${sessionScope.userLoginInfo.member_no}" name="user1">
-			<input type="hidden" value="${sessionScope.userLoginInfo.member_no}" name="user2">
 			<h2>회원 전용 페이지</h2>
 			${sessionScope.userLoginInfo.member_name}님으로 로그인 하셨습니다.<br>
 		    ${sessionScope.userLoginInfo.member_id}님 환영합니다<br>
