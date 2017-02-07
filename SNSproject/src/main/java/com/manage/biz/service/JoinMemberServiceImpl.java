@@ -80,7 +80,6 @@ public class JoinMemberServiceImpl implements JoinMemberService{
     public List<Friends> selectfriends(Friends friends) throws Exception{
     	List<Friends> friendslist= joinmemberDao.selectfriends(friends);
     	return friendslist;
-
     }
     
     public List<Friends> request(Friends friends) throws Exception{
@@ -117,10 +116,16 @@ public class JoinMemberServiceImpl implements JoinMemberService{
     public Board removeBoardContent(Board board_num) throws Exception{
     	return joinmemberDao.deleteBoardContent(board_num);
     }
-    
+
     //좋아요 버튼 클릭시
     public int insertLike(LikeButton likebutton) throws Exception {
     	int l_seq = joinmemberDao.insertLike(likebutton);
 		return l_seq;
     }
+    
+    //좋아요 취소
+    public LikeButton cancleLike(LikeButton likebutton) throws Exception{
+    	return joinmemberDao.cancleLike(likebutton);
+    }
+
 }

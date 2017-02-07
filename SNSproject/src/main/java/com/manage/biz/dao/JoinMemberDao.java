@@ -31,4 +31,5 @@ public interface JoinMemberDao {
     List<Board> listBoardContents(JoinMember joinmember) throws Exception; //게시물 조회
     Board deleteBoardContent(Board board) throws Exception; //게시물 삭제
     int insertLike(LikeButton likebutton) throws Exception; //좋아요 버튼 클릭시
+    LikeButton cancleLike(LikeButton likebutton) throws Exception; //좋아요 취소
 }

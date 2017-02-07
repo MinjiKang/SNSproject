@@ -234,7 +234,7 @@ public class JoinMemberController {
 		return "redirect:findpeople?member_name="+req.getParameter("member_name")+"&member_no="+req.getParameter("member_no")+"&msg="+msg; 
 	}
 	
-	// 친구 수락
+	//친구 수락
 	@RequestMapping("/friendsList") 
 	public String friendslist(Friends friends, Model model) throws Exception {
 		List<Friends> friendslist = joinmemberService.selectfriends(friends);
@@ -243,7 +243,7 @@ public class JoinMemberController {
 		return "sns/FriendList";
 	}
 	
-	// 친구 수락할 리스트
+	//친구 수락할 리스트
 	@RequestMapping("/allowfriends") 
 	public String allowfriends(Friends friends, Model model) throws Exception {
 		joinmemberService.allowfriends(friends);
@@ -251,7 +251,8 @@ public class JoinMemberController {
 		model.addAttribute("friends", friendslist);
 		return "sns/FriendList";
 	}
-	// 移쒓뎄 �떊泥��븳 �쁽�솴
+	
+	//친구 요청
 	@RequestMapping("/request") 
 	public String Request(Friends friends, Model model) throws Exception {
 		List<Friends> re = joinmemberService.request(friends);
@@ -326,7 +327,14 @@ public class JoinMemberController {
 		likebutton.setMember_no(sessionMember.getMember_no());
 		int board_no = board.getBoard_no();
 		likebutton.setBoard_no(board_no);
-		joinmemberService.insertLike(likebutton);
+		int like_status = likebutton.getLike_status();
+		likebutton.setLike_status(like_status);
+		if(like_status == 1){
+			joinmemberService.cancleLike(likebutton);
+		}
+		else{
+			joinmemberService.insertLike(likebutton);
+		}
 		
 		return "redirect:goMain";
 	}

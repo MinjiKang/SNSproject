@@ -47,9 +47,10 @@
 		  obj.style.height = (12+obj.scrollHeight)+"px";
     }
 	
-	function clickLikeButton(num){
-		alert("!!!!!!!!!!!");
+	function clickLikeButton(num,like){
+		alert("좋아요!!!");
 		document.selectBoardContents.board_no.value= num;
+		document.selectBoardContents.like_status.value= like;
 		document.selectBoardContents.action = 'clickLikeButton';
 		document.selectBoardContents.submit();
 	}
@@ -87,8 +88,10 @@
 				    </form>
 				</div>
 				    
-				    <form name='selectBoardContents'>
-			    	<input type="hidden" name="board_no">			
+				    <form name='selectBoardContents' method="post">
+			    	<input type="hidden" name="board_no">
+			    	<input type="hidden" name="like_status">
+			    
 				
 						<c:forEach var="Board" items="${listcontents}">
 							<div id="content_center">
@@ -132,7 +135,7 @@
 									<textarea class="autosize" readonly="readonly">${Board.board_contents}</textarea>
 								</div>
 								<br><br><br><br><br><br>${Board.diff_time}
-								<input type="button" value="좋아요" onclick="clickLikeButton(${Board.board_no})"><br>
+								<input type="button" value="좋아요" onclick="clickLikeButton(${Board.board_no},${Board.like_status})"><br>
 							</div>
 						</c:forEach>
 			   		 </form>

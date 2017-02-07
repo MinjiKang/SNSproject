@@ -90,7 +90,7 @@
 	
 	<!-- 친구 수락 -->
 	<update id="allowfriends" parameterType="friends" >
-   		UPDATE FRIENDS SET FRIEND_TYPE = 1,FRIEND_STATUS=0 
+   		UPDATE FRIENDS SET FRIEND_TYPE = 1, FRIEND_STATUS=0 
    			where (user1=#{user1} 
    			 AND  user2=#{user2})
    			 OR (user2=#{user1} 
@@ -143,9 +143,9 @@
             when to_char(sysdate, 'YYYYMMDD') = substr(board_date,0,8)
             then round((sysdate - to_date(board_date,'YYYYMMDDHH24MISS'))*24 , 0) || ' hours ago'
             else round((sysdate - to_date(board_date,'YYYYMMDDHH24MISS')) , 0) || ' days ago'  
-            end diff_time
-			from board
-		where board_writer=#{member_id}
+            end diff_time, likebutton.LIKE_STATUS
+			from board, likebutton
+		where board_writer=#{member_id} and board.BOARD_NO = likebutton.BOARD_NO
 		union
 		select board.*, case
             when to_char(sysdate, 'YYYYMMDDHH24MI') = substr(board_date,0,12) 
@@ -155,14 +155,15 @@
             when to_char(sysdate, 'YYYYMMDD') = substr(board_date,0,8)
             then round((sysdate - to_date(board_date,'YYYYMMDDHH24MISS'))*24 , 0) || ' hours ago'
             else round((sysdate - to_date(board_date,'YYYYMMDDHH24MISS')) , 0) || ' days ago'  
-            end diff_time
-			from board
+            end diff_time, likebutton.LIKE_STATUS
+			from board, likebutton
 		where board.board_writer in (select b.MEMBER_ID 
 		                           from friends a, joinmember b
 		                           where a.FRIEND_TYPE = '1'  
 		                           and a.user1 = b.MEMBER_NO 
 		                           and (a.user1=#{member_no} or a.user2 = #{member_no}))
-		                           )
+		                           and board.BOARD_NO = likebutton.BOARD_NO(+)
+		                           ) 
 		                           order by board_date desc		                                
 	</select>
 	
@@ -173,9 +174,13 @@
 	
 	<!-- 좋아요 버튼 -->
 	<insert id="insertLike" parameterType="likebutton">
-		<selectKey resultType="integer" keyProperty="like_no" order="BEFORE">
-		    SELECT LIKEBUTTON_SEQ_NO.nextVal FROM DUAL
-		</selectKey>
-		INSERT INTO LIKEBUTTON VALUES (#{like_no},#{board_no},#{member_no},to_char(sysdate, 'YYYYMMDDhh24miss'),#{like_count},1)
+		INSERT INTO LIKEBUTTON VALUES (#{board_no},#{member_no},to_char(sysdate, 'YYYYMMDDhh24miss'),1,1)
 	</insert>
+	
+	<!-- 좋아요 취소 -->
+	<delete id="cancleLike" parameterType="likebutton" >
+   		delete from LIKEBUTTON
+   		where like_status=#{like_status} 
+	</delete>
+	
 </mapper>
