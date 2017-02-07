@@ -130,12 +130,12 @@
 	
 	<!-- 게시글 조회 : 테이블 전체 조회-->
 	<!-- 버전 2 : 게시물 조회 -> 내가 쓴 글과 내 친구가 작성한 게시물만 보임 -->
-	<select id="selectBoardContent" resultType="board" parameterType="joinmember">
+	<select id="selectBoardContent" resultType="HashMap" parameterType="joinmember">
 		<!-- select board.*, case when to_char(sysdate, 'YYYYMMDD') = substr(board_date,0,8) 
             then  trunc((sysdate - to_date(board_date,'YYYYMMDDHH24MISS'))* 24 , 0) || ' hours ago'
        		else trunc((sysdate - to_date(board_date,'YYYYMMDDHH24MISS')) , 0) || ' days ago' end diff_time
 		from board -->
-		select * from (select board.*, case
+		select * from (select a.*, case
             when to_char(sysdate, 'YYYYMMDDHH24MI') = substr(board_date,0,12) 
             then trunc((sysdate - to_date(board_date,'YYYYMMDDHH24MISS'))* 24 * 60 * 60 , 0) || ' seconds ago'
             when to_char(sysdate, 'YYYYMMDDHH24') = substr(board_date,0,10) 
@@ -143,11 +143,12 @@
             when to_char(sysdate, 'YYYYMMDD') = substr(board_date,0,8)
             then round((sysdate - to_date(board_date,'YYYYMMDDHH24MISS'))*24 , 0) || ' hours ago'
             else round((sysdate - to_date(board_date,'YYYYMMDDHH24MISS')) , 0) || ' days ago'  
-            end diff_time, likebutton.LIKE_STATUS
-			from board, likebutton
-		where board_writer=#{member_id} and board.BOARD_NO = likebutton.BOARD_NO
+            end diff_time,
+            decode((select  like_status from LikeButton b where a.board_no = b.board_no and b.member_no =  #{member_no}), 1, 1, 0) as likeButton
+			from board a
+		where board_writer=#{member_id} 
 		union
-		select board.*, case
+		select c.*, case
             when to_char(sysdate, 'YYYYMMDDHH24MI') = substr(board_date,0,12) 
             then trunc((sysdate - to_date(board_date,'YYYYMMDDHH24MISS'))* 24 * 60 * 60 , 0) || ' seconds ago'
             when to_char(sysdate, 'YYYYMMDDHH24') = substr(board_date,0,10) 
@@ -155,14 +156,14 @@
             when to_char(sysdate, 'YYYYMMDD') = substr(board_date,0,8)
             then round((sysdate - to_date(board_date,'YYYYMMDDHH24MISS'))*24 , 0) || ' hours ago'
             else round((sysdate - to_date(board_date,'YYYYMMDDHH24MISS')) , 0) || ' days ago'  
-            end diff_time, likebutton.LIKE_STATUS
-			from board, likebutton
-		where board.board_writer in (select b.MEMBER_ID 
+            end diff_time,
+           decode((select  like_status from LikeButton z where c.board_no = z.board_no and z.member_no =  #{member_no}), 1, 1, 0) as likeButton
+			from board c
+		where c.board_writer in (select b.member_id 
 		                           from friends a, joinmember b
 		                           where a.FRIEND_TYPE = '1'  
 		                           and a.user1 = b.MEMBER_NO 
 		                           and (a.user1=#{member_no} or a.user2 = #{member_no}))
-		                           and board.BOARD_NO = likebutton.BOARD_NO(+)
 		                           ) 
 		                           order by board_date desc		                                
 	</select>
@@ -180,7 +181,7 @@
 	<!-- 좋아요 취소 -->
 	<delete id="cancleLike" parameterType="likebutton" >
    		delete from LIKEBUTTON
-   		where like_status=#{like_status} 
+   		where like_status=#{like_status} and member_no=#{member_no} and board_no=#{board_no}
 	</delete>
 	
 </mapper>

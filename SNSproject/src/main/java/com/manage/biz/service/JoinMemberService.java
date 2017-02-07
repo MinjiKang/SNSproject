@@ -1,6 +1,5 @@
 package com.manage.biz.service;
 
-
 import java.util.List;
 
 import com.manage.biz.vo.Board;
@@ -26,7 +25,7 @@ public interface JoinMemberService {
 	void cancelfriends(Friends friends) throws Exception;
 	void stopfriend(Friends friends) throws Exception;
 	int insertBoardContent(Board board_contents) throws Exception;  //게시글 작성
-	List<Board> listBoardContents(JoinMember joinmember) throws Exception; //게시물 조회
+	List<JoinMember> listBoardContents(JoinMember joinmember) throws Exception; //게시물 조회
 	Board removeBoardContent(Board board_num) throws Exception;  //게시물 삭제
 	int insertLike(LikeButton likebutton) throws Exception; //좋아요 버튼 클릭시
 	LikeButton cancleLike(LikeButton likebutton) throws Exception; //좋아요 취소

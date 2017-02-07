@@ -121,8 +121,8 @@ public class JoinMemberDaoImpl implements JoinMemberDao{
 	} 
 	
 	//게시물 조회
-	public List<Board> listBoardContents(JoinMember joinmember) throws Exception{
-		List<Board> board_contents_list = sqlSession.selectList("JoinMemberDao.selectBoardContent", joinmember);
+	public List<JoinMember> listBoardContents(JoinMember joinmember) throws Exception{
+		List<JoinMember> board_contents_list = sqlSession.selectList("JoinMemberDao.selectBoardContent", joinmember);
 		return board_contents_list;
 	}
 	

@@ -69,7 +69,7 @@ public class JoinMemberController {
 
 		if (loginUser != null) { //session check
 			session.setAttribute("userLoginInfo", loginUser);
-			List<Board> listboard_contents = joinmemberService.listBoardContents(loginUser);
+			List<JoinMember> listboard_contents = joinmemberService.listBoardContents(loginUser);
 			model.addAttribute("listcontents", listboard_contents);
 			
 			return "sns/main"; //로그인 시 넘어가는 화면
@@ -91,7 +91,7 @@ public class JoinMemberController {
 		if (loginUser != null) { //session check
 			session.setAttribute("userLoginInfo", loginUser);
 			Board board = new Board();
-			List<Board> listboard_contents = joinmemberService.listBoardContents(loginUser);
+			List<JoinMember> listboard_contents = joinmemberService.listBoardContents(loginUser);
 			model.addAttribute("listcontents", listboard_contents);
 			
 			return "sns/main"; //로그인 시 넘어가는 화면
@@ -318,7 +318,7 @@ public class JoinMemberController {
 		
     }
 	
-	//좋아요 클릭시 insert
+	//좋아요 
 	@RequestMapping("/clickLikeButton")
 	public String ClickLikeButton(JoinMember joinmember, Board board, LikeButton likebutton, HttpSession session, Model model) throws Exception {
 		
@@ -329,13 +329,13 @@ public class JoinMemberController {
 		likebutton.setBoard_no(board_no);
 		int like_status = likebutton.getLike_status();
 		likebutton.setLike_status(like_status);
+		
 		if(like_status == 1){
 			joinmemberService.cancleLike(likebutton);
 		}
 		else{
 			joinmemberService.insertLike(likebutton);
 		}
-		
 		return "redirect:goMain";
 	}
 	

@@ -48,7 +48,7 @@
     }
 	
 	function clickLikeButton(num,like){
-		alert("좋아요!!!");
+		alert(like);
 		document.selectBoardContents.board_no.value= num;
 		document.selectBoardContents.like_status.value= like;
 		document.selectBoardContents.action = 'clickLikeButton';
@@ -96,17 +96,17 @@
 						<c:forEach var="Board" items="${listcontents}">
 							<div id="content_center">
 								<div id="userid">
-									♣ ${Board.board_writer}
+									♣ ${Board.BOARD_WRITER}
 								</div>
 								<div id="menu_button">
 								
 								<c:set var="loginId" value="${sessionScope.userLoginInfo.member_id}"/>
 								<c:choose>
-									<c:when test="${loginId eq Board.board_writer}">
+									<c:when test="${loginId eq Board.BOARD_WRITER}">
 										<ul class="one"> 
 										  <li><a href="#">menu</a>
 										    <ul>
-										       <li><a onclick="RemoveBoardContent(${Board.board_no})">글 삭제</a></li>
+										       <li><a onclick="RemoveBoardContent(${Board.BOARD_NO})">글 삭제</a></li>
 										       <li><a href="#">글 수정</a></li>
 										       <li><a onclick="javascript:window.open('http://share.naver.com/web/shareView.nhn?url='
 												+encodeURIComponent(document.URL)+'&title='+encodeURIComponent(document.title),
@@ -132,10 +132,15 @@
 								</c:choose>
 								</div>
 								<div id = "autosize_div">
-									<textarea class="autosize" readonly="readonly">${Board.board_contents}</textarea>
+									<textarea class="autosize" readonly="readonly">${Board.BOARD_CONTENTS}</textarea>
 								</div>
-								<br><br><br><br><br><br>${Board.diff_time}
-								<input type="button" value="좋아요" onclick="clickLikeButton(${Board.board_no},${Board.like_status})"><br>
+								<br><br><br><br><br><br>${Board.DIFF_TIME}
+								<c:if test="${Board.LIKEBUTTON eq 1 }">
+								<input type="button" value="좋아요취소" onclick="clickLikeButton(${Board.BOARD_NO},${Board.LIKEBUTTON})"><br>
+								</c:if>
+								<c:if test="${Board.LIKEBUTTON ne 1 }">
+								<input type="button" value="좋아요" onclick="clickLikeButton(${Board.BOARD_NO},${Board.LIKEBUTTON})"><br>
+								</c:if>
 							</div>
 						</c:forEach>
 			   		 </form>
