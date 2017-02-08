@@ -142,4 +142,15 @@ public class JoinMemberDaoImpl implements JoinMemberDao{
 	public LikeButton cancleLike(LikeButton likebutton) throws Exception{
 		return sqlSession.selectOne("JoinMemberDao.cancleLike", likebutton);
 	}
+	
+	//게시물 삭제에 다른 like 삭제 
+	public LikeButton deleteLike(LikeButton likebutton) throws Exception{
+		return sqlSession.selectOne("JoinMemberDao.deleteLike", likebutton);
+	}
+	
+	//like한 사람 리스트
+	public List<LikeButton> likePeopleList(LikeButton likebutton) throws Exception{
+		List<LikeButton> like_people_list = sqlSession.selectList("JoinMemberDao.likePeopleList", likebutton);
+		return like_people_list;
+	}
 }

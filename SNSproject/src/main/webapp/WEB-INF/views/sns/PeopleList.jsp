@@ -25,10 +25,10 @@ window.onload = function(){
 <body>
 <form name='form1' action="addfriend">
 
-<input type="text" value="${sessionScope.userLoginInfo.member_no}" name="user1">
-<input type="text" name="user2">
-<input type="text" name="member_name" id="member_name" value="${member_name}">
-<input type="text" name="member_no" id="member_no" value="${sessionScope.userLoginInfo.member_no}">
+<input type="hidden" value="${sessionScope.userLoginInfo.member_no}" name="user1">
+<input type="hidden" name="user2">
+<input type="hidden" name="member_name" id="member_name" value="${member_name}">
+<input type="hidden" name="member_no" id="member_no" value="${sessionScope.userLoginInfo.member_no}">
 
 <h1>${sessionScope.userLoginInfo.member_name}의 검색 목록</h1>
 <table border="1">

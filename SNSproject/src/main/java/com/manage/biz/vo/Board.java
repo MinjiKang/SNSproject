@@ -8,6 +8,7 @@ public class Board {
 	String board_time;
 	String diff_time;
 	int like_status;
+	int like_time;
 	
 	public int getBoard_no() {
 		return board_no;
@@ -51,5 +52,10 @@ public class Board {
 	public void setLike_status(int like_status) {
 		this.like_status = like_status;
 	}
-	
+	public int getLike_time() {
+		return like_time;
+	}
+	public void setLike_time(int like_time) {
+		this.like_time = like_time;
+	}
 }

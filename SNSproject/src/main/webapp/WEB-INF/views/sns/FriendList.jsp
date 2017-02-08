@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>친구 신청 목록</title>
 </head>
 <script>
 function allow(all){
@@ -18,8 +18,8 @@ function allow(all){
 <body>
 <h1>친구 신청 목록</h1>
 <form name='form1' action="allowfriends">
-<input type="text" value="${sessionScope.userLoginInfo.member_no}" name="user1">
-<input type="text" name="user2">
+<input type="hidden" value="${sessionScope.userLoginInfo.member_no}" name="user1">
+<input type="hidden" name="user2">
 <table border="1">
 <tr>
 	<th width="100">신청한사람</th>

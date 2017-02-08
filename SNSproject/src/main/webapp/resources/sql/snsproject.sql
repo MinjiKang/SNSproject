@@ -44,6 +44,6 @@ Create Table LikeButton (
     board_no number not null,
     member_no integer NOT NULL,
     like_time VARCHAR(20) NOT NULL,
-    like_count number NOT NULL,
-    like_status number NOT NULL
+    like_status number NOT NULL,
+    primary key (board_no, member_no)
 )

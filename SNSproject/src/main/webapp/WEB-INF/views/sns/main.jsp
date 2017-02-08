@@ -37,9 +37,9 @@
 	
 	function RemoveBoardContent(num){
 		alert("삭제합니다.");
-		document.selectBoardContents.board_no.value= num;
-		document.selectBoardContents.action = 'deleteBoardContent';
-		document.selectBoardContents.submit();
+		document.deleteForm.board_no.value= num;
+		document.deleteForm.action = 'deleteBoardContent';
+		document.deleteForm.submit();
 	}
 
 	function resize(obj) {
@@ -48,16 +48,33 @@
     }
 	
 	function clickLikeButton(num,like){
-		alert(like);
-		document.selectBoardContents.board_no.value= num;
-		document.selectBoardContents.like_status.value= like;
-		document.selectBoardContents.action = 'clickLikeButton';
-		document.selectBoardContents.submit();
+		document.likeForm.board_no.value= num;
+		document.likeForm.like_status.value= like;
+		document.likeForm.action = 'clickLikeButton';
+	    document.likeForm.submit();
 	}
 	
+	function likeList(num){
+		document.likeListForm.board_no.value = num;
+		document.likeListForm.action = 'likePeoplList';
+		document.likeListForm.submit();
+	}
 </script>
 </head>
 	<body>
+	
+	<form name='deleteForm'>
+		<input type="hidden" name="board_no">
+    </form>	
+    
+    <form name='likeForm'>
+		<input type="hidden" name="board_no">
+ 		<input type="hidden" name="like_status">
+    </form>	
+    
+    <form name='likeListForm'>
+    	<input type="hidden" name="board_no">
+    </form>
 	
 	<div id="wrap">
 
@@ -89,7 +106,7 @@
 				</div>
 				    
 				    <form name='selectBoardContents' method="post">
-			    	<input type="hidden" name="board_no">
+			    	<input type="hidden" name="delno">
 			    	<input type="hidden" name="like_status">
 			    
 				
@@ -132,7 +149,7 @@
 								</c:choose>
 								</div>
 								<div id = "autosize_div">
-									<textarea class="autosize" readonly="readonly">${Board.BOARD_CONTENTS}</textarea>
+									<textarea class="autosize" readonly>${Board.BOARD_CONTENTS}</textarea>
 								</div>
 								<br><br><br><br><br><br>${Board.DIFF_TIME}
 								<c:if test="${Board.LIKEBUTTON eq 1 }">
@@ -141,6 +158,8 @@
 								<c:if test="${Board.LIKEBUTTON ne 1 }">
 								<input type="button" value="좋아요" onclick="clickLikeButton(${Board.BOARD_NO},${Board.LIKEBUTTON})"><br>
 								</c:if>
+								<input type="text" value="${Board.LIKECOUNT}">
+								<input type="button" value="좋아요list" onclick="likeList(${Board.BOARD_NO})">
 							</div>
 						</c:forEach>
 			   		 </form>

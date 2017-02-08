@@ -29,4 +29,6 @@ public interface JoinMemberService {
 	Board removeBoardContent(Board board_num) throws Exception;  //게시물 삭제
 	int insertLike(LikeButton likebutton) throws Exception; //좋아요 버튼 클릭시
 	LikeButton cancleLike(LikeButton likebutton) throws Exception; //좋아요 취소
+	LikeButton deleteLike(LikeButton likebutton) throws Exception; //게시물 삭제에 다른 like 삭제 
+	List<LikeButton> likePeopleList(LikeButton likebutton) throws Exception; //좋아요 한 사람 리스트
 }

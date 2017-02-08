@@ -311,7 +311,14 @@ public class JoinMemberController {
 	//게시글 삭제
 	@RequestMapping("/deleteBoardContent")
     public String deleteBoardContent(Board board, Model model, HttpSession session) throws Exception{
+
+		// like table delete
+		LikeButton likebutton = new LikeButton();
+		likebutton.setBoard_no(board.getBoard_no());
+		joinmemberService.deleteLike(likebutton);
+		// comment table delete
 		
+		// board table delete
 		joinmemberService.removeBoardContent(board);
 		
 		return "redirect:goMain";
@@ -338,5 +345,15 @@ public class JoinMemberController {
 		}
 		return "redirect:goMain";
 	}
+	
+	//좋아요  한 사람 리스트 
+	@RequestMapping("/likePeoplList")
+	public String likePeoplList(LikeButton likebutton, Model model) throws Exception {
+		
+		List<LikeButton> like_people_list = joinmemberService.likePeopleList(likebutton);
+		model.addAttribute("likePeopleList", like_people_list);
+		
+		return "sns/likePeopleList"; //jsp -> likePeopleList.jsp 추가
+	}	
 	
 }

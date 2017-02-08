@@ -128,4 +128,15 @@ public class JoinMemberServiceImpl implements JoinMemberService{
     	return joinmemberDao.cancleLike(likebutton);
     }
 
+    //게시물 삭제에 다른 like 삭제 
+    public LikeButton deleteLike(LikeButton likebutton) throws Exception{
+    	return joinmemberDao.deleteLike(likebutton);
+    }
+    
+    //좋아요 한 사람 리스트
+    public List<LikeButton> likePeopleList(LikeButton likebutton) throws Exception{
+    	List<LikeButton> like_people_list = joinmemberDao.likePeopleList(likebutton);
+    	return like_people_list;
+    }
 }
+

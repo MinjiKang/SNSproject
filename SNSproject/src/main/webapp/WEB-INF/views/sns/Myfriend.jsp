@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>친구조회창</title>
+<title>내 친구 목록</title>
 <script>
 function RemoveFriend(toFriend){
 	alert(toFriend);
@@ -24,9 +24,9 @@ window.onload = function(){
 </head>
 <body>
 <form name='form1'>
-<input type="text" value="${sessionScope.userLoginInfo.member_no}" name="user1">
-<input type="text" name="user2">
-<h1>${sessionScope.userLoginInfo.member_no}의 친구 목록</h1>
+<input type="hidden" value="${sessionScope.userLoginInfo.member_no}" name="user1">
+<input type="hidden" name="user2">
+<h1>${sessionScope.userLoginInfo.member_name}의 친구 목록</h1>
 
 <table border="1">
 <tr>
