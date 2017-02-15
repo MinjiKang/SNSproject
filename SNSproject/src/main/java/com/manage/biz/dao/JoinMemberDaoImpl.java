@@ -131,11 +131,14 @@ public class JoinMemberDaoImpl implements JoinMemberDao{
 		return sqlSession.selectOne("JoinMemberDao.deleteBoardContent", board);
 	}
 
+	//게시물 수정
+		public void updateBoardContent(Board board) throws Exception{
+			sqlSession.update("JoinMemberDao.updateBoardContent", board);
+	}
+		
 	//좋아요 버튼 클릭시
-	public int insertLike(LikeButton likebutton) throws Exception{
+	public void insertLike(LikeButton likebutton) throws Exception{
 		sqlSession.insert("JoinMemberDao.insertLike", likebutton);
-		int l_seq = likebutton.getLike_no();
-		return l_seq;
 	}
 	
 	//좋아요 취소

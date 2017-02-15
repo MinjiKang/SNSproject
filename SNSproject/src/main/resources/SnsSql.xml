@@ -74,18 +74,18 @@
 	
 	<!-- 친구신청목록 -->
 	<select id="selectfriends" resultType="HashMap"  parameterType="friends">
-	select a.user1,a.user2,a.friend_type,a.friend_status,b.member_no,b.member_name from friends a,joinmember b
-	where a.user1=#{user1}
-	and a.friend_status=3
-	and a.user2=b.member_no
+		select a.user1,a.user2,a.friend_type,a.friend_status,b.member_no,b.member_name from friends a,joinmember b
+		where a.user1=#{user1}
+		and a.friend_status=3
+		and a.user2=b.member_no
 	</select>
 
 	<!-- 친구신청목록2 -->
 	<select id="request" resultType="HashMap" parameterType="friends">
-	select a.user1,a.user2,a.friend_status,a.friend_type,b.member_no,b.member_name from friends a,JOINMEMBER b
-	where user1=#{user1}
-	and friend_status=2
-	AND user2=member_no
+		select a.user1,a.user2,a.friend_status,a.friend_type,b.member_no,b.member_name from friends a,JOINMEMBER b
+		where user1=#{user1}
+		and friend_status=2
+		AND user2=member_no
 	</select>
 	
 	<!-- 친구 수락 -->
@@ -131,10 +131,6 @@
 	<!-- 게시글 조회 : 테이블 전체 조회-->
 	<!-- 버전 2 : 게시물 조회 -> 내가 쓴 글과 내 친구가 작성한 게시물만 보임 -->
 	<select id="selectBoardContent" resultType="HashMap" parameterType="joinmember">
-		<!-- select board.*, case when to_char(sysdate, 'YYYYMMDD') = substr(board_date,0,8) 
-            then  trunc((sysdate - to_date(board_date,'YYYYMMDDHH24MISS'))* 24 , 0) || ' hours ago'
-       		else trunc((sysdate - to_date(board_date,'YYYYMMDDHH24MISS')) , 0) || ' days ago' end diff_time
-		from board -->
 		select * from (select a.*, case
             when to_char(sysdate, 'YYYYMMDDHH24MI') = substr(board_date,0,12) 
             then trunc((sysdate - to_date(board_date,'YYYYMMDDHH24MISS'))* 24 * 60 * 60 , 0) || ' seconds ago'
@@ -142,9 +138,11 @@
             then round((sysdate - to_date(board_date,'YYYYMMDDHH24MISS'))* 24 * 60 , 0) || ' mins ago'
             when to_char(sysdate, 'YYYYMMDD') = substr(board_date,0,8)
             then round((sysdate - to_date(board_date,'YYYYMMDDHH24MISS'))*24 , 0) || ' hours ago'
-            else round((sysdate - to_date(board_date,'YYYYMMDDHH24MISS')) , 0) || ' days ago'  
-            end diff_time,
-            decode((select  like_status from LikeButton b where a.board_no = b.board_no and b.member_no =  #{member_no}), 1, 1, 0) as likeButton
+            when 5 > round((sysdate - to_date(board_date,'YYYYMMDDHH24MISS')) , 0)
+            then  round((sysdate - to_date(board_date,'YYYYMMDDHH24MISS')) , 0) || ' days ago' 
+            else to_char(to_date(board_date,'YYYYMMDDHH24MISS'), 'yyyy-mm-dd hh24:mi')  
+            end diff_time
+            ,decode((select  like_status from LikeButton b where a.board_no = b.board_no and b.member_no =  #{member_no}), 1, 1, 0) as likeButton
 			,(select count(*) from LikeButton where board_no = a.board_no ) as likeCount
 			from board a
 		where board_writer=#{member_id} 
@@ -156,9 +154,11 @@
             then round((sysdate - to_date(board_date,'YYYYMMDDHH24MISS'))* 24 * 60 , 0) || ' mins ago'
             when to_char(sysdate, 'YYYYMMDD') = substr(board_date,0,8)
             then round((sysdate - to_date(board_date,'YYYYMMDDHH24MISS'))*24 , 0) || ' hours ago'
-            else round((sysdate - to_date(board_date,'YYYYMMDDHH24MISS')) , 0) || ' days ago'  
-            end diff_time,
-            decode((select  like_status from LikeButton z where c.board_no = z.board_no and z.member_no =  #{member_no}), 1, 1, 0) as likeButton
+            when 5 > round((sysdate - to_date(board_date,'YYYYMMDDHH24MISS')) , 0)
+            then  round((sysdate - to_date(board_date,'YYYYMMDDHH24MISS')) , 0) || ' days ago' 
+            else to_char(to_date(board_date,'YYYYMMDDHH24MISS'), 'yyyy-mm-dd hh24:mi')
+            end diff_time
+            ,decode((select  like_status from LikeButton z where c.board_no = z.board_no and z.member_no =  #{member_no}), 1, 1, 0) as likeButton
 		    ,(select count(*) from LikeButton where board_no = c.board_no ) as likeCount
 		    from board c
 		where c.board_writer in (select b.member_id 
@@ -174,6 +174,12 @@
 	<delete id="deleteBoardContent" parameterType="board">
 		DELETE FROM BOARD WHERE board_no=#{board_no}
 	</delete>
+	
+	<!-- 게시물 수정 -->
+	<update id="updateBoardContent" parameterType="board">
+      UPDATE board SET board_contents = #{board_contents}
+      WHERE board_no = #{board_no}
+    </update>
 	
 	<!-- 좋아요 버튼 -->
 	<insert id="insertLike" parameterType="likebutton">

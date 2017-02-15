@@ -36,10 +36,6 @@ Create Table board (
     primary key (board_no)
 )
 
-CREATE sequence LikeButton_SEQ_NO 
-START WITH 1 
-INCREMENT BY 1;
-
 Create Table LikeButton (
     board_no number not null,
     member_no integer NOT NULL,

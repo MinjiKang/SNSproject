@@ -1,19 +1,12 @@
 package com.manage.biz.vo;
 
 public class LikeButton {
-	int like_no;
 	int board_no;
 	int member_no;
 	String like_time;
 	int like_count;
 	int like_status;
 	
-	public int getLike_no() {
-		return like_no;
-	}
-	public void setLike_no(int like_no) {
-		this.like_no = like_no;
-	}
 	public int getBoard_no() {
 		return board_no;
 	}

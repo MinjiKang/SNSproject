@@ -116,11 +116,15 @@ public class JoinMemberServiceImpl implements JoinMemberService{
     public Board removeBoardContent(Board board_num) throws Exception{
     	return joinmemberDao.deleteBoardContent(board_num);
     }
+    
+   //게시물 수정
+    public void updateBoardContent(Board board) throws Exception{
+    	joinmemberDao.updateBoardContent(board);
+    }
 
     //좋아요 버튼 클릭시
-    public int insertLike(LikeButton likebutton) throws Exception {
-    	int l_seq = joinmemberDao.insertLike(likebutton);
-		return l_seq;
+    public void insertLike(LikeButton likebutton) throws Exception {
+    	joinmemberDao.insertLike(likebutton);
     }
     
     //좋아요 취소

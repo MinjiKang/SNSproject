@@ -59,6 +59,22 @@
 		document.likeListForm.action = 'likePeoplList';
 		document.likeListForm.submit();
 	}
+	
+	function ModifyBoard(num){
+		var edit = document.getElementById(num+'+edit');
+		document.modifyContent.bno.value = num;
+		document.getElementById(num+'+edit').readOnly=false;
+		edit.focus();
+		
+	}
+	
+	function confirmEdit(num){
+		var content = document.getElementById(num+'+edit').value;
+		document.modifyContent.bno.value = num;
+		document.modifyContent.content.value=content;
+		document.modifyContent.action = 'modifyBoardContent';
+		document.modifyContent.submit();
+	} 
 </script>
 </head>
 	<body>
@@ -76,6 +92,11 @@
     	<input type="hidden" name="board_no">
     </form>
 	
+	<form name='modifyContent'>
+    	<input type="hidden" name="bno">
+    	<input type="hidden" name="content">
+    </form>
+    
 	<div id="wrap">
 
 	    <div id="header">
@@ -124,7 +145,7 @@
 										  <li><a href="#">menu</a>
 										    <ul>
 										       <li><a onclick="RemoveBoardContent(${Board.BOARD_NO})">글 삭제</a></li>
-										       <li><a href="#">글 수정</a></li>
+										       <li><a onclick="ModifyBoard('${Board.BOARD_NO}')">글 수정</a></li>
 										       <li><a onclick="javascript:window.open('http://share.naver.com/web/shareView.nhn?url='
 												+encodeURIComponent(document.URL)+'&title='+encodeURIComponent(document.title),
 												 'naversharedialog', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=500,width=500');return false;" 
@@ -149,17 +170,23 @@
 								</c:choose>
 								</div>
 								<div id = "autosize_div">
-									<textarea class="autosize" readonly>${Board.BOARD_CONTENTS}</textarea>
+									<textarea class="autosize" id="${Board.BOARD_NO}+edit" readonly>${Board.BOARD_CONTENTS}</textarea>
 								</div>
 								<br><br><br><br><br><br>${Board.DIFF_TIME}
+								
+								<input type = "button" value="수정" onclick ="confirmEdit('${Board.BOARD_NO}')">
+								
 								<c:if test="${Board.LIKEBUTTON eq 1 }">
-								<input type="button" value="좋아요취소" onclick="clickLikeButton(${Board.BOARD_NO},${Board.LIKEBUTTON})"><br>
+								<img src="resources/img/like.JPG" onclick="clickLikeButton(${Board.BOARD_NO},${Board.LIKEBUTTON})" style="width:20px; height:20px;"><br>
 								</c:if>
 								<c:if test="${Board.LIKEBUTTON ne 1 }">
-								<input type="button" value="좋아요" onclick="clickLikeButton(${Board.BOARD_NO},${Board.LIKEBUTTON})"><br>
+								<img src="resources/img/likeno.JPG" onclick="clickLikeButton(${Board.BOARD_NO},${Board.LIKEBUTTON})" style="width:20px; height:20px;"><br>
 								</c:if>
-								<input type="text" value="${Board.LIKECOUNT}">
-								<input type="button" value="좋아요list" onclick="likeList(${Board.BOARD_NO})">
+								<c:if test="${Board.LIKECOUNT ne 0 }">
+								<img src="resources/img/like.JPG" onclick="likeList(${Board.BOARD_NO})" style="width:18px; height:18px;">
+								<input type="text" id= "likecount" value="좋아요 ${Board.LIKECOUNT}개" size= 5 style="border-top-style:none; border-left-style:none;
+								border-right-style:none; border-bottom-style:none;">
+								</c:if>
 							</div>
 						</c:forEach>
 			   		 </form>

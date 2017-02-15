@@ -305,7 +305,7 @@ public class JoinMemberController {
 		joinmemberService.insertBoardContent(board_contents);
 		
 		return "redirect:goMain";
-		
+	
 	}
 
 	//게시글 삭제
@@ -325,6 +325,19 @@ public class JoinMemberController {
 		
     }
 	
+	//게시물 수정
+	@RequestMapping("/modifyBoardContent")
+	public String modifyBoardContent(JoinMember joinmember, HttpServletRequest req, Board board, Model model) throws Exception {
+
+		Board board1 = new Board();
+		int board_no = board.getBoard_no();
+		board1.setBoard_no(board_no);
+		board1.setBoard_contents(req.getParameter("content"));
+		
+		joinmemberService.updateBoardContent(board1);
+		return "redirect:goMain";
+	}
+		
 	//좋아요 
 	@RequestMapping("/clickLikeButton")
 	public String ClickLikeButton(JoinMember joinmember, Board board, LikeButton likebutton, HttpSession session, Model model) throws Exception {
